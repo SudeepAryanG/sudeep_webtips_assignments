@@ -11,38 +11,41 @@
 <!--TOP CONTAINER-->
 
             <div class="top-container"> 
+                
             <!--LEFT CONTAINER-->
                 <div class="left-container">
-                    <div class="left-item-1"></div>
+                    <div id="left-item-1" >
+                        <img id="top-img" src="HTML & CSS\Icons for cities\nome.svg" width="100px" height="100px">
+                    </div>
                     <div class="left-item-2">
-                        <select class="dropdown" type="text">
-                            <option value="New York">New York</option>
-                            <option value="New Delhi">New Delhi</option>
-                            <option value="Kolkatha">Kolkatha</option>
-                            <option value="London">London</option>
-                        </select>
-                        
+                        <select id="dropdown" onchange="change()" type="text">
+                            <option></option>
+                        </select>                        
                     </div>
                     <div class="left-item-3">
                         <div >Temp<span>&#176;</span>C</div>
-                        <h1 class="top-left-text">25 C</h1>                        
+                        <h1 id="top-tempc">4°C</h1>                        
                     </div>
                     <div class="left-item-4">
-                        <div>Humidity</div><h1 class="top-left-text-1">26%</h1>
+                        <div>Humidity</div><h1 id="top-humidity">91%</h1>
                     </div>                    
                     <div class="left-item-5"></div>
                     <div class="left-item-6">
-                        <span class="size">10:10</span><span class="size1">:44</span>&nbsp;&nbsp;<img src="HTML & CSS/General Images & Icons/amState.svg" alt="am" height="50px" width="50px"/>
-                        
-                        <div class="top-date">01-Mar-2020</div>
+                        <span id="top-time"></span>
+                        <!-- <span class="size">10:10</span>
+                        <span class="size1">:44</span>&nbsp;&nbsp;
+                        <img src="HTML & CSS/General Images & Icons/amState.svg" alt="am" height="50px" width="50px"/>
+                        <div class="top-date">01-Mar-2020</div> -->
                     </div>
                     <div class="left-item-7">
-                        <p>Temp F</p><h1 class="top-left-text">78 F</h1>
+                        <div >Temp F</div>
+                        <h1 id="top-far">78 F</h1>
                     </div>
                     <!-- <div class="line"></div>
                     <div class="line"></div> -->
                     <div class="left-item-8">
-                        <p>Precipitation</p><h1 class="top-left-text-1">0%</h1>
+                        <div>Precipitation</div>
+                        <h1 id="top-precipitation">8%</h1>
                     </div>
                 </div>
 
