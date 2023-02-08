@@ -28,7 +28,7 @@ body {
   text-align: center;
   width: 100%;
 }
-#dropdown {
+#inputdata {
   background-color: var(--bg-input-box);
   color: var(--primary-white);
   font-size: 1.5rem;
@@ -63,7 +63,7 @@ body {
   color: var(--bright-yellow-text);
   font-size: 1.5em;
 }
-.time-color {
+#time-color {
   color: var(--bright-yellow-text);
 }
 #top-date {
@@ -267,7 +267,7 @@ body {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
   }
-  .dropdown {
+  #dropdown {
     font-size: 1rem;
   }
   #city-logo {
