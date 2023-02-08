@@ -1,0 +1,512 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="vars.css" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap"
+    />
+  </head>
+  <body>
+    <div>
+      <!--TOP CONTAINER-->
+
+      <div class="top-container">
+        <!--LEFT CONTAINER-->
+        <div class="left-container">
+          <div id="city-logo">
+            <img
+              id="top-img"
+              src="HTML & CSS\Icons for cities\nome.svg"
+              width="100px"
+              height="100px"
+            />
+          </div>
+          <div>
+            <select id="dropdown" onchange="change()" type="text">
+              <option>New York</option>
+            </select>
+          </div>
+          <div class="tempc">
+            <div class="top-inner-text">
+              <div>Temp<span>&#176;</span>C</div>
+              <h1 id="top-tempc">4°C</h1>
+            </div>
+          </div>
+          <div class="humidity">
+            <div class="top-inner-text">
+              <div>Humidity</div>
+              <h1 id="top-humidity">91%</h1>
+            </div>
+          </div>
+          <div class="empty-space"></div>
+          <div class="date-time">
+            <!-- <div id="top-time"></div> -->
+            <span id="top-time-1">10:10</span>
+
+            <span class="time-color">44</span>
+            &nbsp;&nbsp;
+            <img
+              src="HTML & CSS/General Images & Icons/amState.svg"
+              alt="am"
+              height="50px"
+              width="50px"
+            />
+            <div id="top-date">01-Mar-2020</div>
+          </div>
+          <div class="tempf">
+            <div class="top-inner-text">
+              <div>Temp F</div>
+              <h1 id="top-far">78 F</h1>
+            </div>
+          </div>
+          <div class="precipitation">
+            <div class="top-inner-text">
+              <div>Precipitation</div>
+              <h1 id="top-precipitation">8%</h1>
+            </div>
+          </div>
+        </div>
+
+        <!--RIGHT CONTAINER-->
+        <div class="right-container">
+          <div class="right-item">
+            <div>NOW</div>
+          </div>
+          <div class="right-item">
+            <div>11 AM</div>
+          </div>
+          <div class="right-item">
+            <div>12 PM</div>
+          </div>
+          <div class="right-item">
+            <div>1 PM</div>
+          </div>
+          <div class="right-item">
+            <div>2 PM</div>
+          </div>
+          <div class="right-item">
+            <div>3 PM</div>
+          </div>
+          <div class="right-item">
+            <p class="border-right-1">|</p>
+          </div>
+          <div class="right-item">
+            <p class="border-right-1">|</p>
+          </div>
+          <div class="right-item">
+            <p class="border-right-1">|</p>
+          </div>
+          <div class="right-item">
+            <p class="border-right-1">|</p>
+          </div>
+          <div class="right-item">
+            <p class="border-right-1">|</p>
+          </div>
+          <div class="right-item">
+            <p>|</p>
+          </div>
+          <div class="right-item">
+            <img src="HTML & CSS/Weather Icons/cloudyIcon.svg" atl="cloud" />
+          </div>
+          <div class="right-item">
+            <img
+              src="HTML & CSS/Weather Icons/rainyIconBlack.svg"
+              atl="rainyIconBlack"
+            />
+          </div>
+          <div class="right-item">
+            <img src="HTML & CSS/Weather Icons/windyIcon.svg" atl="windyIcon" />
+          </div>
+          <div class="right-item">
+            <img
+              src="HTML & CSS/Weather Icons/cloudyIcon.svg"
+              atl="rainyIconBlack"
+            />
+          </div>
+          <div class="right-item">
+            <img src="HTML & CSS/Weather Icons/windyIcon.svg" atl="windyIcon" />
+          </div>
+          <div class="right-item">
+            <img
+              src="HTML & CSS/Weather Icons/rainyIconBlack.svg"
+              atl="rainyIconBlack"
+            />
+          </div>
+          <div class="right-item">
+            <div>6</div>
+          </div>
+          <div class="right-item">
+            <div>7</div>
+          </div>
+          <div class="right-item">
+            <div>7</div>
+          </div>
+          <div class="right-item">
+            <div>8</div>
+          </div>
+          <div class="right-item">
+            <div>8</div>
+          </div>
+          <div class="right-item">
+            <div>6</div>
+          </div>
+        </div>
+      </div>
+      <!--MIDDEL CONTAINER-->
+      <div class="middle-container">
+        <div id="middle-line">
+          <div class="middle-text">Top cities around world</div>
+          <div id="middle-text-1">
+            <div class="cursor-pointer">
+              <img src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
+            </div>
+            <div class="cursor-pointer">
+              <img
+                src="HTML & CSS/Weather Icons/snowflakeIcon.svg"
+                alt="snow"
+              />
+            </div>
+            <div class="cursor-pointer">
+              <img
+                src="HTML & CSS/Weather Icons/rainyIconBlack.svg"
+                alt="rainy"
+              />
+            </div>
+            <div>
+              <span
+                >Display Top
+                <input type="number" min="3" max="10" />
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="middle-block">
+          <div class="mid">
+            <div class="mid-item">
+              <div>New York</div>
+              <div class="mid-img">
+                <img src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
+                <span>38<span>&#176;</span>C</span>
+              </div>
+            </div>
+            <div>10:00AM</div>
+            <div>
+              <img
+                src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                alt="rainy"
+              />53%
+            </div>
+            <div>
+              <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
+            </div>
+          </div>
+          <div class="mid">
+            <div class="mid-item">
+              <div>New York</div>
+              <div class="mid-img">
+                <img src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
+                <span>38<span>&#176;</span>C</span>
+              </div>
+            </div>
+            <div>10:00AM</div>
+            <div>
+              <img
+                src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                alt="rainy"
+              />53%
+            </div>
+            <div>
+              <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
+            </div>
+          </div>
+          <div class="mid">
+            <div class="mid-item">
+              <div>New York</div>
+              <div class="mid-img">
+                <img src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
+                <span>38<span>&#176;</span>C</span>
+              </div>
+            </div>
+            <div>10:00AM</div>
+            <div>
+              <img
+                src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                alt="rainy"
+              />53%
+            </div>
+            <div>
+              <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
+            </div>
+          </div>
+          <div class="mid">
+            <div class="mid-item">
+              <div>New York</div>
+              <div class="mid-img">
+                <img src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
+                <span>38<span>&#176;</span>C</span>
+              </div>
+            </div>
+            <div>10:00AM</div>
+            <div>
+              <img
+                src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                alt="rainy"
+              />53%
+            </div>
+            <div>
+              <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
+            </div>
+          </div>
+          <div class="mid">
+            <div class="mid-item">
+              <div>New York</div>
+              <div class="mid-img">
+                <img src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
+                <span>38<span>&#176;</span>C</span>
+              </div>
+            </div>
+            <div>10:00AM</div>
+            <div>
+              <img
+                src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                alt="rainy"
+              />53%
+            </div>
+            <div>
+              <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
+            </div>
+          </div>
+          <div class="mid">
+            <div class="mid-item">
+              <div>New York</div>
+              <div class="mid-img">
+                <img src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
+                <span>38<span>&#176;</span>C</span>
+              </div>
+            </div>
+            <div>10:00AM</div>
+            <div>
+              <img
+                src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                alt="rainy"
+              />53%
+            </div>
+            <div>
+              <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--BOTTOM CONTAINER-->
+      <div class="bottom-container">
+        <div id="bottom-text">
+          <p>Cities across continents at a Glance</p>
+          <div id="bottom-text-1">
+            <p>
+              Continent Name &nbsp;<img
+                src="HTML & CSS/General Images & Icons/arrowDown.svg"
+                alt="down arrow"
+                height="15px"
+                width="15px"
+              />
+            </p>
+            <p>
+              Temperature &nbsp;<img
+                src="HTML & CSS/General Images & Icons/arrowUp.svg"
+                alt="up arrow"
+                height="15px"
+                width="15px"
+              />
+            </p>
+          </div>
+        </div>
+        <div class="bottom-grid">
+          <div class="grid-item">
+            <div class="grid-text">
+              <p class="country-names">Asia</p>
+              <span class="btm-temp">38<span>&#176;</span>C</span>
+            </div>
+            <div class="grid-text">
+              Delhi,10.10 AM<span
+                ><img
+                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                  alt="rainy"
+                />
+                53%</span
+              >
+            </div>
+          </div>
+          <div class="grid-item">
+            <div class="grid-text">
+              <p class="country-names">Africa</p>
+              <span class="btm-temp">38<span>&#176;</span>C</span>
+            </div>
+            <p class="grid-text">
+              Eqypt,10.10 AM<span
+                ><img
+                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                  alt="rainy"
+                />
+                53%</span
+              >
+            </p>
+          </div>
+          <div class="grid-item">
+            <div class="grid-text">
+              <p class="country-names">Europe</p>
+              <span class="btm-temp">26<span>&#176;</span>C</span>
+            </div>
+            <p class="grid-text">
+              London,10.10 AM<span
+                ><img
+                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                  alt="rainy"
+                />
+                53%</span
+              >
+            </p>
+          </div>
+          <div class="grid-item">
+            <div class="grid-text">
+              <p class="country-names">Asia</p>
+              <span class="btm-temp">37<span>&#176;</span>C</span>
+            </div>
+            <p class="grid-text">
+              Chennai,10.10 AM<span
+                ><img
+                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                  alt="rainy"
+                />
+                53%</span
+              >
+            </p>
+          </div>
+          <div class="grid-item">
+            <div class="grid-text">
+              <p class="country-names">Africa</p>
+              <span class="btm-temp">32<span>&#176;</span>C</span>
+            </div>
+            <p class="grid-text">
+              Eqypt,10.10 AM<span
+                ><img
+                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                  alt="rainy"
+                />
+                53%</span
+              >
+            </p>
+          </div>
+          <div class="grid-item">
+            <div class="grid-text">
+              <p class="country-names">Europe</p>
+              <span class="btm-temp">22<span>&#176;</span>C</span>
+            </div>
+            <p class="grid-text">
+              London,10.10 AM<span
+                ><img
+                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                  alt="rainy"
+                />
+                53%</span
+              >
+            </p>
+          </div>
+          <div class="grid-item">
+            <div class="grid-text">
+              <p class="country-names">Asia</p>
+              <span class="btm-temp">36<span>&#176;</span>C</span>
+            </div>
+            <p class="grid-text">
+              Chennai,10.10 AM<span
+                ><img
+                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                  alt="rainy"
+                />
+                53%</span
+              >
+            </p>
+          </div>
+          <div class="grid-item">
+            <div class="grid-text">
+              <p class="country-names">Europe</p>
+              <span class="btm-temp">30<span>&#176;</span>C</span>
+            </div>
+            <p class="grid-text">
+              London,10.10 AM<span
+                ><img
+                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                  alt="rainy"
+                />
+                53%</span
+              >
+            </p>
+          </div>
+          <div class="grid-item">
+            <div class="grid-text">
+              <p class="country-names">South America</p>
+              <span class="btm-temp">35<span>&#176;</span>C</span>
+            </div>
+            <p class="grid-text">
+              Brazil,10.10 AM<span
+                ><img
+                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                  alt="rainy"
+                />
+                53%</span
+              >
+            </p>
+          </div>
+          <div class="grid-item">
+            <div class="grid-text">
+              <p class="country-names">Asia</p>
+              <span class="btm-temp">36<span>&#176;</span>C</span>
+            </div>
+            <p class="grid-text">
+              Delhi,10.10 AM<span
+                ><img
+                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                  alt="rainy"
+                />
+                53%</span
+              >
+            </p>
+          </div>
+          <div class="grid-item">
+            <div class="grid-text">
+              <p class="country-names">Europe</p>
+              <span class="btm-temp">28<span>&#176;</span>C</span>
+            </div>
+            <p class="grid-text">
+              London,10.10 AM<span
+                ><img
+                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                  alt="rainy"
+                />
+                53%</span
+              >
+            </p>
+          </div>
+          <div class="grid-item">
+            <div class="grid-text">
+              <p class="country-names">South America</p>
+              <span class="btm-temp">32<span>&#176;</span>C</span>
+            </div>
+            <p class="grid-text">
+              Brazil,10.10 AM<span
+                ><img
+                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                  alt="rainy"
+                />
+                53%</span
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="index.js"></script>
+  </body>
+</html>
