@@ -17,71 +17,90 @@
         <!--LEFT CONTAINER-->
         <div class="left-container">
           <div id="city-logo">
-            <img id="top-img"src="HTML & CSS\Icons for cities\nome.svg"width="100px"height="100px"/>
+            <img
+              id="top-img"
+              src="HTML & CSS\Icons for cities\nome.svg"
+              width="100px"
+              height="100px"
+            />
           </div>
-          <div >
+          <div class="dropdown">
+            <input
+              id="inputdata"
+              list="data_dropdown"
+              onchange="change()"
+              name="myBrowser"
+            />
+            <datalist id="data_dropdown">
+              <option></option>
+            </datalist>
+          </div>
+
+          <!-- <div>
             <select id="dropdown" onchange="change()" type="text">
               <option></option>
             </select>
-          </div>
+          </div> -->
           <div class="tempc">
             <div class="top-inner-text">
-                <div>Temp<span>&#176;</span>C</div>
-                <h1 id="top-tempc">4°C</h1>
+              <div>Temp<span>&#176;</span>C</div>
+              <h1 id="top-tempc">4°C</h1>
             </div>
           </div>
           <div class="humidity">
             <div class="top-inner-text">
-                <div>Humidity</div>
-                <h1 id="top-humidity">91%</h1>
+              <div>Humidity</div>
+              <h1 id="top-humidity">91%</h1>
             </div>
-            
           </div>
           <div class="empty-space"></div>
           <div class="date-time">
             <!-- <div id="top-time"></div> -->
-            <span id="top-time-1"></span>
+            <span id="top-time-1">25</span>
             <!-- <span  class="size">10:10</span> -->
-            <span class="time-color">44</span>
+            <span id="time-color">12</span>
             &nbsp;&nbsp;
-            <img src="HTML & CSS/General Images & Icons/amState.svg"alt="am"height="50px"width="50px"/>
-            <div id="top-date">01-Mar-2020</div>
+            <img
+              src="HTML & CSS/General Images & Icons/amState.svg"
+              alt="am"
+              height="50px"
+              width="50px"
+            />
+            <div id="top-date"></div>
           </div>
           <div class="tempf">
             <div class="top-inner-text">
-                <div>Temp F</div>
-                <h1 id="top-far">78 F</h1>
+              <div>Temp F</div>
+              <h1 id="top-far">78 F</h1>
             </div>
-            
           </div>
           <div class="precipitation">
             <div class="top-inner-text">
-                <div>Precipitation</div>
-                <h1 id="top-precipitation">8%</h1>
+              <div>Precipitation</div>
+              <h1 id="top-precipitation">8%</h1>
             </div>
-            
           </div>
         </div>
 
         <!--RIGHT CONTAINER-->
         <div class="right-container">
           <div class="right-item">
-            <div>NOW</div>
+            <div id="time-1">NOW</div>
           </div>
           <div class="right-item">
-            <div>11 AM</div>
+            <div id="time-2">11 AM</div>
           </div>
           <div class="right-item">
-            <div>12 PM</div>
+            <div id="time-3">12 PM</div>
           </div>
           <div class="right-item">
-            <div>1 PM</div>
+            <div id="time-4">1 PM</div>
           </div>
           <div class="right-item">
-            <div>2 PM</div>
+            <div id="time-5">2 PM</div>
           </div>
           <div class="right-item">
-            <div>3 PM</div>
+            <div id="time-6">3 PM</div>
           </div>
           <div class="right-item">
             <p class="border-right-1">|</p>
@@ -102,49 +121,64 @@
             <p>|</p>
           </div>
           <div class="right-item">
-            <img src="HTML & CSS/Weather Icons/cloudyIcon.svg" atl="cloud" />
+            <img
+              id="icon-1"
+              src="HTML & CSS/Weather Icons/cloudyIcon.svg"
+              atl="cloud"
+            />
           </div>
           <div class="right-item">
             <img
+              id="icon-2"
               src="HTML & CSS/Weather Icons/rainyIconBlack.svg"
               atl="rainyIconBlack"
             />
           </div>
           <div class="right-item">
-            <img src="HTML & CSS/Weather Icons/windyIcon.svg" atl="windyIcon" />
+            <img
+              id="icon-3"
+              src="HTML & CSS/Weather Icons/windyIcon.svg"
+              atl="windyIcon"
+            />
           </div>
           <div class="right-item">
             <img
+              id="icon-4"
               src="HTML & CSS/Weather Icons/cloudyIcon.svg"
               atl="rainyIconBlack"
             />
           </div>
           <div class="right-item">
-            <img src="HTML & CSS/Weather Icons/windyIcon.svg" atl="windyIcon" />
+            <img
+              id="icon-5"
+              src="HTML & CSS/Weather Icons/windyIcon.svg"
+              atl="windyIcon"
+            />
           </div>
           <div class="right-item">
             <img
+              id="icon-6"
               src="HTML & CSS/Weather Icons/rainyIconBlack.svg"
               atl="rainyIconBlack"
             />
           </div>
           <div class="right-item">
-            <div>6</div>
+            <div id="temperature-1">6</div>
           </div>
           <div class="right-item">
-            <div>7</div>
+            <div id="temperature-2">7</div>
           </div>
           <div class="right-item">
-            <div>7</div>
+            <div id="temperature-3">7</div>
           </div>
           <div class="right-item">
-            <div>8</div>
+            <div id="temperature-4">8</div>
           </div>
           <div class="right-item">
-            <div>8</div>
+            <div id="temperature-5">8</div>
           </div>
           <div class="right-item">
-            <div>6</div>
+            <div id="temperature-6">6</div>
           </div>
         </div>
       </div>
@@ -177,7 +211,7 @@
           </div>
         </div>
         <div class="middle-block">
-          <div class="mid ">
+          <div class="mid">
             <div class="mid-item">
               <div>New York</div>
               <div class="mid-img">
@@ -215,7 +249,7 @@
               <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
             </div>
           </div>
-          <div class="mid ">
+          <div class="mid">
             <div class="mid-item">
               <div>New York</div>
               <div class="mid-img">
@@ -234,7 +268,7 @@
               <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
             </div>
           </div>
-          <div class="mid ">
+          <div class="mid">
             <div class="mid-item">
               <div>New York</div>
               <div class="mid-img">
@@ -253,7 +287,7 @@
               <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
             </div>
           </div>
-          <div class="mid ">
+          <div class="mid">
             <div class="mid-item">
               <div>New York</div>
               <div class="mid-img">
@@ -272,7 +306,7 @@
               <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
             </div>
           </div>
-          <div class="mid ">
+          <div class="mid">
             <div class="mid-item">
               <div>New York</div>
               <div class="mid-img">
@@ -362,7 +396,7 @@
               >
             </p>
           </div>
-          <div class="grid-item ">
+          <div class="grid-item">
             <div class="grid-text">
               <p class="country-names">Asia</p>
               <span class="btm-temp">37<span>&#176;</span>C</span>
@@ -407,7 +441,7 @@
               >
             </p>
           </div>
-          <div class="grid-item ">
+          <div class="grid-item">
             <div class="grid-text">
               <p class="country-names">Asia</p>
               <span class="btm-temp">36<span>&#176;</span>C</span>
@@ -422,7 +456,7 @@
               >
             </p>
           </div>
-          <div class="grid-item ">
+          <div class="grid-item">
             <div class="grid-text">
               <p class="country-names">Europe</p>
               <span class="btm-temp">30<span>&#176;</span>C</span>
@@ -452,7 +486,7 @@
               >
             </p>
           </div>
-          <div class="grid-item ">
+          <div class="grid-item">
             <div class="grid-text">
               <p class="country-names">Asia</p>
               <span class="btm-temp">36<span>&#176;</span>C</span>
@@ -467,7 +501,7 @@
               >
             </p>
           </div>
-          <div class="grid-item ">
+          <div class="grid-item">
             <div class="grid-text">
               <p class="country-names">Europe</p>
               <span class="btm-temp">28<span>&#176;</span>C</span>
@@ -482,7 +516,7 @@
               >
             </p>
           </div>
-          <div class="grid-item ">
+          <div class="grid-item">
             <div class="grid-text">
               <p class="country-names">South America</p>
               <span class="btm-temp">32<span>&#176;</span>C</span>
