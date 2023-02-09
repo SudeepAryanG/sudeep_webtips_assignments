@@ -9,7 +9,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap"
     />
   </head>
-  <body>
+  <body onload="firstcity()">
     <div>
       <!--TOP CONTAINER-->
 
@@ -28,7 +28,7 @@
             <input
               id="inputdata"
               list="data_dropdown"
-              onchange="change()"
+              onchange="callChange()"
               name="myBrowser"
             />
             <datalist id="data_dropdown">
@@ -56,11 +56,12 @@
           <div class="empty-space"></div>
           <div class="date-time">
             <!-- <div id="top-time"></div> -->
-            <span id="top-time-1">25</span>
+            <span id="top-time"></span>
             <!-- <span  class="size">10:10</span> -->
-            <span id="time-color">12</span>
+            <span id="time-color"></span>
             &nbsp;&nbsp;
             <img
+            id="am"
               src="HTML & CSS/General Images & Icons/amState.svg"
               alt="am"
               height="50px"
