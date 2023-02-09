@@ -5,7 +5,8 @@ fetch("data.json")
     weather_data = result;
     console.log(weather_data);
     setWeather();
-    change();
+    // change();
+    setInterval(change,1000);
   });
 
 function setWeather() {
@@ -16,12 +17,7 @@ function setWeather() {
   }
   document.querySelector("#data_dropdown").innerHTML = option;
 }
-function firstcity() {
-  var city = Object.keys(weather_data);
-  document.getElementById("inputdata").innerHTML = city[0];
-  console.log(document.getElementById("inputdata").value);
-  change();
-}
+
 
 //temperature
 let far;
@@ -40,7 +36,7 @@ function callChange() {
   for (let i = 0; i < city.length; i++) {
     if (currentCity == city[i]) {
       console.log("main");
-      change(currentCity);
+      change();
       flag = 1;
     }
   }
@@ -65,9 +61,9 @@ function Null() {
   }
 }
 
-function change(currentCity) {
-  var dropdown = currentCity;
-  console.log(dropdown);
+function change() {
+  var dropdown = document.querySelector("#inputdata").value.toLowerCase();;
+  // console.log(dropdown);
   var city = Object.keys(weather_data);
   let monthArr = [
     "Jan",
@@ -88,8 +84,10 @@ function change(currentCity) {
     "top-img"
   ).src = `HTML & CSS/Icons for cities/${dropdown}.svg`;
   //temperature
-  document.getElementById("top-tempc").innerHTML =
-    weather_data[dropdown].temperature;
+  console.log(weather_data,dropdown)
+  var temp= weather_data[dropdown].temperature;
+  document.getElementById("top-tempc").innerHTML =temp;
+   
   //humidity
   document.getElementById("top-humidity").innerHTML =
     weather_data[dropdown].humidity;
