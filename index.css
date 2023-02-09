@@ -59,7 +59,7 @@ body {
   color: var(--primary-white);
   text-align: start;
 }
-#top-time-1 {
+#top-time {
   color: var(--bright-yellow-text);
   font-size: 1.5em;
 }
