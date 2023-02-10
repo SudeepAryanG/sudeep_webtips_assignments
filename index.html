@@ -28,7 +28,7 @@
             <input
               id="inputdata"
               list="data_dropdown"
-              onchange="callChange()"
+              
               name="myBrowser"
               value="anadyr"
             />
@@ -190,16 +190,16 @@
           <div class="middle-text">Top cities around world</div>
           <div id="middle-text-1">
             <div class="cursor-pointer">
-              <img src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
+              <img id="sunny"  src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
             </div>
             <div class="cursor-pointer">
-              <img
+              <img id="snow"
                 src="HTML & CSS/Weather Icons/snowflakeIcon.svg"
                 alt="snow"
               />
             </div>
             <div class="cursor-pointer">
-              <img
+              <img id="rainy" 
                 src="HTML & CSS/Weather Icons/rainyIconBlack.svg"
                 alt="rainy"
               />
@@ -207,13 +207,17 @@
             <div>
               <span
                 >Display Top
-                <input type="number" min="3" max="10" />
+                <input id="displaynum" type="number" min="3" max="10" />
               </span>
             </div>
           </div>
         </div>
+        <!-- <button id="curser-left">
+          <
+        </button> -->
+
         <div class="middle-block">
-          <div class="mid">
+          <!-- <div class="mid1">
             <div class="mid-item">
               <div>New York</div>
               <div class="mid-img">
@@ -232,7 +236,7 @@
               <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
             </div>
           </div>
-          <div class="mid">
+          <div class="mid2">
             <div class="mid-item">
               <div>New York</div>
               <div class="mid-img">
@@ -251,7 +255,7 @@
               <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
             </div>
           </div>
-          <div class="mid">
+          <div class="mid3">
             <div class="mid-item">
               <div>New York</div>
               <div class="mid-img">
@@ -269,64 +273,8 @@
             <div>
               <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
             </div>
-          </div>
-          <div class="mid">
-            <div class="mid-item">
-              <div>New York</div>
-              <div class="mid-img">
-                <img src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
-                <span>38<span>&#176;</span>C</span>
-              </div>
-            </div>
-            <div>10:00AM</div>
-            <div>
-              <img
-                src="HTML & CSS/Weather Icons/humidityIcon.svg"
-                alt="rainy"
-              />53%
-            </div>
-            <div>
-              <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
-            </div>
-          </div>
-          <div class="mid">
-            <div class="mid-item">
-              <div>New York</div>
-              <div class="mid-img">
-                <img src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
-                <span>38<span>&#176;</span>C</span>
-              </div>
-            </div>
-            <div>10:00AM</div>
-            <div>
-              <img
-                src="HTML & CSS/Weather Icons/humidityIcon.svg"
-                alt="rainy"
-              />53%
-            </div>
-            <div>
-              <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
-            </div>
-          </div>
-          <div class="mid">
-            <div class="mid-item">
-              <div>New York</div>
-              <div class="mid-img">
-                <img src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
-                <span>38<span>&#176;</span>C</span>
-              </div>
-            </div>
-            <div>10:00AM</div>
-            <div>
-              <img
-                src="HTML & CSS/Weather Icons/humidityIcon.svg"
-                alt="rainy"
-              />53%
-            </div>
-            <div>
-              <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" />10%
-            </div>
-          </div>
+          </div> -->
+
         </div>
       </div>
       <!--BOTTOM CONTAINER-->
@@ -536,6 +484,6 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript" src="index.js"></script>
+    <script type="module" src="index.js"></script>
   </body>
 </html>
