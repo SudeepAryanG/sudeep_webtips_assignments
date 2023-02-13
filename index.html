@@ -193,9 +193,9 @@
               <img id="sunny"  src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
             </div>
             <div class="cursor-pointer">
-              <img id="snow"
+              <img id="snowflake"
                 src="HTML & CSS/Weather Icons/snowflakeIcon.svg"
-                alt="snow"
+                alt="snowflake"
               />
             </div>
             <div class="cursor-pointer">
@@ -215,11 +215,9 @@
         <button id="curser-left">
           <
         </button>
-        <button id="curser-right">
-          >
-        </button>
+ 
 
-        <div  class="middle-block">
+        <div id="middle-block"  class="middle-block">
           
           <!-- <div class="mid1">
             <div class="mid-item">
@@ -280,6 +278,9 @@
           </div> -->
 
         </div>
+        <button id="curser-right">
+          >
+        </button>
       </div>
       
       <!--BOTTOM CONTAINER-->
@@ -287,26 +288,26 @@
         <div id="bottom-text">
           <p>Cities across continents at a Glance</p>
           <div id="bottom-text-1">
-            <p>
-              Continent Name &nbsp;<img
+            <div id="continent">
+              Continent Name &nbsp;<img id="bottom-continent-arrow"
                 src="HTML & CSS/General Images & Icons/arrowDown.svg"
                 alt="down arrow"
                 height="15px"
                 width="15px"
               />
-            </p>
-            <p>
-              Temperature &nbsp;<img
+            </div>
+            <div id="bottom-temp">
+              Temperature &nbsp;<img id="bottom-temp-arrow"
                 src="HTML & CSS/General Images & Icons/arrowUp.svg"
                 alt="up arrow"
                 height="15px"
                 width="15px"
               />
-            </p>
+            </div>
           </div>
         </div>
         <div class="bottom-grid">
-          <div class="grid-item">
+          <!-- <div id="grid-item" class="grid-item">
             <div class="grid-text">
               <p class="country-names">Asia</p>
               <span class="btm-temp">38<span>&#176;</span>C</span>
@@ -485,7 +486,7 @@
                 53%</span
               >
             </p>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

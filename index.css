@@ -99,7 +99,7 @@ body {
   padding: 1%;
   max-width: 100%;
   min-height: 300px;
-
+  position: relative;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -131,7 +131,7 @@ body {
   width: 87vw;
 }
 #curser-left{
-  position: fixed;
+  position: absolute;
   top: 60%;
   font-size: x-large;
   border-radius: 50%;
@@ -246,6 +246,12 @@ body {
 .grid-item:hover {
   background-color: #535252;
   transform: scale(1.05);
+}
+#continent{
+  cursor: pointer;
+}
+#bottom-temp{
+  cursor: pointer;
 }
 @media only screen and (max-width: 600px) {
   .bottom-grid {

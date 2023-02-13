@@ -1,6 +1,9 @@
 import changeToFarenheit from "./export.js";
 var weather_data;
 let currWeather;
+
+
+
 (function(){
 fetch("data.json")
   .then((data) => data.json())
@@ -8,8 +11,14 @@ fetch("data.json")
     weather_data = result;
     console.log(weather_data);
     setWeather();
-    setWeathercard('sunny')
+    setTimeout(()=>setWeathercard('sunny'),300) 
     // setInterval(change,1000);
+    setInterval(displayContinentCards,1000)
+    // setInterval(()=>display(arr),1000);
+    sortByContinent();
+    change()
+    
+    
   });
 })();  //IIFE 
 function setWeather() {
@@ -196,7 +205,7 @@ var sortedRainyWeatherValues=[];
 
 //Task 2
 document.querySelector("#sunny").addEventListener("click", () => { setWeathercard("sunny");});
-document.querySelector("#snow").addEventListener("click", () => { setWeathercard("snow");});
+document.querySelector("#snowflake").addEventListener("click", () => { setWeathercard("snowflake");});
 document.querySelector("#rainy").addEventListener("click", () => { setWeathercard("rainy");});
 document.querySelector("#displaynum").addEventListener("change",setMinMax);
 
@@ -241,7 +250,7 @@ for(let i = 0; i<arr.length; i++){
                 <span>${arr[i].temperature}</span>
               </div>
             </div>
-            <div >${time}</div>
+            <div class="city-card-time">${time}</div>
             <div>
               <img
                 src="HTML & CSS/Weather Icons/humidityIcon.svg"
@@ -256,7 +265,7 @@ for(let i = 0; i<arr.length; i++){
 }
 document.querySelector(".middle-block").innerHTML = card;
 
-console.log("reach",document.querySelectorAll(".mid"),arr);
+// console.log("reach",document.querySelectorAll(".mid"),arr);
 document.querySelectorAll(".mid").forEach((element,i)=>{
   element.style.backgroundImage =`url('./HTML & CSS/Icons for cities/${arr[i].cityName.toLowerCase()}.svg')`;
 })
@@ -265,18 +274,36 @@ document.querySelectorAll(".mid").forEach((element,i)=>{
 
 function setMinMax(){
     console.log('setminmax')
-    let limiter=document.querySelector("#displaynum").value; 
+    let limiter=parseInt(document.querySelector("#displaynum").value); 
     if(currWeather=='sunny'){
+      console.log(sortedSunnyWeatherValues.length,limiter);
       if (sortedSunnyWeatherValues.length>limiter){
+        
+        if(limiter<4){
+
+          document.querySelector('#curser-left').style.display = 'none';
+          document.querySelector('#curser-right').style.display = 'none';
+        }else{
+          document.querySelector('#curser-left').style.display = 'block';
+          document.querySelector('#curser-right').style.display = 'block';
+        }
         display(sortedSunnyWeatherValues.slice(0,limiter)); 
+        
       }
       else{
         display(sortedSunnyWeatherValues);
       }
     }
 
-    else if(currWeather=='snow'){
+    else if(currWeather=='snowflake'){
       if (sortedsnowWeatherValues.length>limiter){
+        if(limiter<4){
+          document.querySelector('#curser-left').style.display = 'none';
+          document.querySelector('#curser-right').style.display = 'none';
+        }else{
+          document.querySelector('#curser-left').style.display = 'block';
+          document.querySelector('#curser-right').style.display = 'block'
+        }
         display(sortedsnowWeatherValues.slice(0,limiter));
       }
       else{
@@ -285,27 +312,33 @@ function setMinMax(){
     } 
     else{
       if (sortedRainyWeatherValues.length>limiter){
+        console.log("reach rain");
+        if(limiter<4){
+          document.querySelector('#curser-left').style.display = 'none';
+          document.querySelector('#curser-right').style.display = 'none';
+        }else{
+          document.querySelector('#curser-left').style.display = 'block';
+          document.querySelector('#curser-right').style.display = 'block';
+        }
         display(sortedRainyWeatherValues.slice(0,limiter));
       }
       else{
         display(sortedRainyWeatherValues);
       }
-    } 
+    }  
 }
   
 function setWeathercard(weather){ 
   currWeather=weather;
   var cityValues = Object.values(weather_data);
   let sunnyWeather=[];
-
   let snowWeather=[];
-
   let rainyWeather=[];
 
 
   document.getElementById("sunny").style.borderBottom = "none";
   document.getElementById("rainy").style.borderBottom = "none";
-  document.getElementById("snow").style.borderBottom = "none";
+  document.getElementById("snowflake").style.borderBottom = "none";
   
   
   //SUNNY Weather
@@ -327,18 +360,17 @@ function setWeathercard(weather){
     let slicedSortedSunnyWeatherValues=setMinMax(); 
   }
   //SNOW Weather
-  if(weather=='snow'){
+  if(weather=='snowflake'){
      
-    //Get the cities with snow weather
-    for(let i=0;i<cityValues.length;i++)
-    {
-      if( (parseInt(cityValues[i].temperature) >= 20 && parseInt(cityValues[i].temperature) < 28) 
-        && (parseInt(cityValues[i].humidity) > 50) 
-        && (parseInt(cityValues[i].precipitation) < 50) ){
-            snowWeather.push(cityValues[i]); 
-        }
-    }
-    document.getElementById("snow").style.borderBottom = "2px solid #1E90FF";
+    //Get the cities with snow weather Filter method is used
+    const snowWeather = cityValues.filter(city => {
+      const temperature = parseInt(city.temperature);
+      const humidity = parseInt(city.humidity);
+      const precipitation = parseInt(city.precipitation);
+      return temperature >= 20 && temperature < 28 && humidity > 50 && precipitation < 50;
+    });
+    
+    document.getElementById("snowflake").style.borderBottom = "2px solid #1E90FF";
     // Sort the cities in descending order of temperature
     sortedsnowWeatherValues= sortCities(snowWeather,"temperature");
     let slicedsortedsnowWeatherValues=setMinMax();
@@ -348,13 +380,13 @@ function setWeathercard(weather){
   if(weather=='rainy'){
     
     //Get the cities with rainy weather
-    for(let i=0; i<cityValues.length; i++)
-    {
-      if( (parseInt(cityValues[i].temperature) < 20) 
-          && (parseInt(cityValues[i].humidity) >= 50) ){
-            rainyWeather.push(cityValues[i])
-          }
-    }
+    const rainyWeather = cityValues.filter(city => {
+      const temperature = parseInt(city.temperature);
+      const humidity = parseInt(city.humidity);
+      return temperature < 20 && humidity >= 50;
+    });
+    
+
     document.getElementById("rainy").style.borderBottom = "2px solid #1E90FF";
   //Sort cities in descending order of humidity
   sortedRainyWeatherValues = sortCities(rainyWeather,"humidity");
@@ -362,17 +394,21 @@ function setWeathercard(weather){
   
   //Display the city details in cards 
   let slicedsortedRainyWeatherValues=setMinMax();
+
  }
 
 
 }
-
-document.querySelector("#curser-left").addEventListener('click',()=>{
-  document.querySelector("#middle-block").scrollleft+=300;
+//scroll bars
+document.querySelector("#curser-left").addEventListener("click",()=>{
+  document.querySelector("#middle-block").scrollLeft-=300;
   console.log("scroll-left")
 })
-document.querySelector("#curser-right").addEventListener('click',()=>{
-  document.querySelector("#middle-block").scrollleft-=300;
+document.querySelector("#curser-right").addEventListener("click",()=>{
+  document.querySelector("#middle-block").scrollLeft+=300;
   console.log("scroll-right")
 })
+
+
+
 
