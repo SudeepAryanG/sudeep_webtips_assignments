@@ -1,5 +1,6 @@
 import changeToFarenheit from "./export.js";
 var weather_data;
+let currWeather;
 (function(){
 fetch("data.json")
   .then((data) => data.json())
@@ -8,7 +9,7 @@ fetch("data.json")
     console.log(weather_data);
     setWeather();
     setWeathercard('sunny')
-    setInterval(change,1000);
+    // setInterval(change,1000);
   });
 })();  //IIFE 
 function setWeather() {
@@ -45,6 +46,11 @@ function callChange() {
     ErrorCity();
   }
 }
+
+/**
+ * @desc this function sets the null value for weather details when 
+ * invalid city is selected
+ */
 function ErrorCity() {
   document.querySelector("#top-tempc").innerText = "-";
   document.querySelector("#top-far").innerText = "-";
@@ -64,7 +70,7 @@ function ErrorCity() {
 
 function change() {
   var dropdown = document.querySelector("#inputdata").value.toLowerCase();;
-  // console.log(dropdown);
+  
   var city = Object.keys(weather_data);
   let monthArr = [
     "Jan",
@@ -147,9 +153,7 @@ function change() {
     } else if (sixtemp[i] >= 18 && sixtemp[i] <= 22) {
       document.querySelector(`#icon-${i + 1}`).src =
         "HTML & CSS/Weather Icons/windyIcon.svg";
-    } else if (sixtemp[i] >= 18 && sixtemp[i] <= 22) {
-      document.querySelector(`#icon-${i + 1}`).src =
-        "HTML & CSS/Weather Icons/windyIcon.svg";
+    
     } else if (sixtemp[i] >= 23 && sixtemp[i] <= 29) {
       document.querySelector(`#icon-${i + 1}`).src =
         "HTML & CSS/Weather Icons/cloudyIcon.svg";
@@ -158,13 +162,12 @@ function change() {
         "HTML & CSS/Weather Icons/sunnyIcon.svg";
     }
   }
-
-
-
   //Hours changing with wrt to time.
-  let hour = parseInt(time.split(":")[0]);
-  let noon = time.split(" ")[1];
 
+  let hour = parseInt(time.split(":")[0]);
+
+  let noon = time.slice(-2);
+  console.log(noon);
   for (let i = 0; i < 6; i++) {
     if (hour > 12) {
       hour = hour - 12;
@@ -173,6 +176,7 @@ function change() {
       document.querySelector(`#time-${i + 1}`).innerHTML = "NOW";
     } else {
       document.querySelector(`#time-${i + 1}`).innerHTML = hour + " " + noon;
+
     }
     if (hour == 11 && noon == "PM") {
       noon = "AM";
@@ -186,8 +190,16 @@ function change() {
   }
 
 }
+var sortedSunnyWeatherValues = [];
+var sortedsnowWeatherValues = [];
+var sortedRainyWeatherValues=[];
 
 //Task 2
+document.querySelector("#sunny").addEventListener("click", () => { setWeathercard("sunny");});
+document.querySelector("#snow").addEventListener("click", () => { setWeathercard("snow");});
+document.querySelector("#rainy").addEventListener("click", () => { setWeathercard("rainy");});
+document.querySelector("#displaynum").addEventListener("change",setMinMax);
+
 function sortCities(arr,constraint)
 {
   if(constraint=="temperature")
@@ -211,14 +223,76 @@ function sortCities(arr,constraint)
   return arr;
 };
 
-document.querySelector("#sunny").addEventListener("click", () => { setWeathercard("sunny");});
-document.querySelector("#snow").addEventListener("click", () => { setWeathercard("snow");});
-document.querySelector("#rainy").addEventListener("click", () => { setWeathercard("rainy");});
+//Display Top Cards
 
-var sortedSunnyWeatherValues = [];
-var sortedsnowWeatherValues = [];
-var sortedRainyWeatherValues=[];
-var currWeather;
+function display(arr){
+  let card="";
+for(let i = 0; i<arr.length; i++){ 
+  let time = new Date().toLocaleString("en-US", {
+    timeZone: arr[i].timeZone,
+    timeStyle: "medium",
+    hourCycle: "h12",
+  });
+  card += `<div class="mid">
+            <div class="mid-item">
+              <div>${arr[i].cityName}</div>
+              <div class="mid-img">
+                <img src="HTML & CSS/Weather Icons/${currWeather}Icon.svg" alt="sunny" />
+                <span>${arr[i].temperature}</span>
+              </div>
+            </div>
+            <div >${time}</div>
+            <div>
+              <img
+                src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                alt="rainy"
+              />${arr[i].humidity}
+            </div>
+            <div>
+              <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" 
+              />${arr[i].precipitation}
+            </div>
+          </div>`
+}
+document.querySelector(".middle-block").innerHTML = card;
+
+console.log("reach",document.querySelectorAll(".mid"),arr);
+document.querySelectorAll(".mid").forEach((element,i)=>{
+  element.style.backgroundImage =`url('./HTML & CSS/Icons for cities/${arr[i].cityName.toLowerCase()}.svg')`;
+})
+}
+
+
+function setMinMax(){
+    console.log('setminmax')
+    let limiter=document.querySelector("#displaynum").value; 
+    if(currWeather=='sunny'){
+      if (sortedSunnyWeatherValues.length>limiter){
+        display(sortedSunnyWeatherValues.slice(0,limiter)); 
+      }
+      else{
+        display(sortedSunnyWeatherValues);
+      }
+    }
+
+    else if(currWeather=='snow'){
+      if (sortedsnowWeatherValues.length>limiter){
+        display(sortedsnowWeatherValues.slice(0,limiter));
+      }
+      else{
+        display(sortedsnowWeatherValues) ;
+      }
+    } 
+    else{
+      if (sortedRainyWeatherValues.length>limiter){
+        display(sortedRainyWeatherValues.slice(0,limiter));
+      }
+      else{
+        display(sortedRainyWeatherValues);
+      }
+    } 
+}
+  
 function setWeathercard(weather){ 
   currWeather=weather;
   var cityValues = Object.values(weather_data);
@@ -247,53 +321,14 @@ function setWeathercard(weather){
       }
     }
     // Sort the cities in descending order of temperature
-    
     sortedSunnyWeatherValues = sortCities(sunnyWeather,"temperature");
     console.log(sortCities(sunnyWeather,"temperature"))
-    //Display the city details in cards 
-    let card="";
-    for(let i = 0; i<sortedSunnyWeatherValues.length; i++){ 
-      let time = new Date().toLocaleString("en-US", {
-        timeZone: sortedSunnyWeatherValues[i].timeZone,
-        timeStyle: "medium",
-        hourCycle: "h12",
-      });
-      card += `<div class="mid">
-                <div class="mid-item">
-                  <div>${sortedSunnyWeatherValues[i].cityName}</div>
-                  <div class="mid-img">
-                    <img src="HTML & CSS/Weather Icons/sunnyIcon.svg" alt="sunny" />
-                    <span>${sortedSunnyWeatherValues[i].temperature}</span>
-                  </div>
-                </div>
-                <div >${time}</div>
-                <div>
-                  <img
-                    src="HTML & CSS/Weather Icons/humidityIcon.svg"
-                    alt="rainy"
-                  />${sortedSunnyWeatherValues[i].humidity}
-                </div>
-                <div>
-                  <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" 
-                  />${sortedSunnyWeatherValues[i].precipitation}
-                </div>
-              </div>`
-    }
-    document.querySelector(".middle-block").innerHTML = card;
-    
-    //Change the background image for each city
-    
-      console.log("reach",document.querySelectorAll(".mid"),sunnyWeather);
-      document.querySelectorAll(".mid").forEach((element,i)=>{
-        element.style.backgroundImage =`url('./HTML & CSS/Icons for cities/${sunnyWeather[i].cityName.toLowerCase()}.svg')`;
-      })
-    
-    
+    //Display the city details in cards  
+    let slicedSortedSunnyWeatherValues=setMinMax(); 
   }
-
-
   //SNOW Weather
   if(weather=='snow'){
+     
     //Get the cities with snow weather
     for(let i=0;i<cityValues.length;i++)
     {
@@ -305,51 +340,13 @@ function setWeathercard(weather){
     }
     document.getElementById("snow").style.borderBottom = "2px solid #1E90FF";
     // Sort the cities in descending order of temperature
-    sortedsnowWeatherValues = sortCities(snowWeather,"temperature");
-
+    sortedsnowWeatherValues= sortCities(snowWeather,"temperature");
+    let slicedsortedsnowWeatherValues=setMinMax();
     //Display the city details in cards 
-    let card="";
-    for(let i = 0; i<sortedsnowWeatherValues.length; i++){
-      
-      let time = new Date().toLocaleString("en-US", {
-        timeZone: sortedsnowWeatherValues[i].timeZone,
-        timeStyle: "medium",
-        hourCycle: "h12",
-      });
-      card += `<div class="mid">
-                <div class="mid-item">
-                  <div>${sortedsnowWeatherValues[i].cityName}</div>
-                  <div class="mid-img">
-                    <img src="HTML & CSS/Weather Icons/snowflakeIcon.svg" alt="sunny" />
-                    <span>${sortedsnowWeatherValues[i].temperature}</span>
-                  </div>
-                </div>
-                <div>${time}</div>
-                <div>
-                  <img
-                    src="HTML & CSS/Weather Icons/humidityIcon.svg"
-                    alt="rainy"
-                  />${sortedsnowWeatherValues[i].humidity}
-                </div>
-                <div>
-                  <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" 
-                  />${sortedsnowWeatherValues[i].precipitation}
-                </div>
-              </div>`
     }
-    document.querySelector(".middle-block").innerHTML = card;
-    
-    console.log("reach",document.querySelectorAll(".mid"),snowWeather);
-      //Change the background image for each city
-      document.querySelectorAll(".mid").forEach((element,i)=>{
-        element.style.backgroundImage =`url('./HTML & CSS/Icons for cities/${snowWeather[i].cityName.toLowerCase()}.svg')`;
-      })
-  }
-
-
-
   //Rainy weather
   if(weather=='rainy'){
+    
     //Get the cities with rainy weather
     for(let i=0; i<cityValues.length; i++)
     {
@@ -362,108 +359,20 @@ function setWeathercard(weather){
   //Sort cities in descending order of humidity
   sortedRainyWeatherValues = sortCities(rainyWeather,"humidity");
   console.log(sortCities(rainyWeather,"humidity"));
-
+  
   //Display the city details in cards 
-  let card="";
-  for(let i = 0; i<sortedRainyWeatherValues.length; i++){
-    let time = new Date().toLocaleString("en-US", {
-      timeZone: sortedRainyWeatherValues[i].timeZone,
-      timeStyle: "medium",
-      hourCycle: "h12",
-    });
-    card += `<div class="mid">
-              <div class="mid-item">
-                <div>${sortedRainyWeatherValues[i].cityName}</div>
-                <div class="mid-img">
-                  <img src="HTML & CSS/Weather Icons/rainyIcon.svg" alt="sunny" />
-                  <span>${sortedRainyWeatherValues[i].temperature}</span>
-                </div>
-              </div>
-              <div>${time}</div>
-              <div>
-                <img
-                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
-                  alt="rainy"
-                />${sortedRainyWeatherValues[i].humidity}
-              </div>
-              <div>
-                <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" 
-                />${sortedRainyWeatherValues[i].precipitation}
-              </div>
-            </div>`
-  }
-  document.querySelector(".middle-block").innerHTML = card;
-  //Change the background image for each city
-  document.querySelectorAll(".mid").forEach((element,i)=>{
-    element.style.backgroundImage =`url('./HTML & CSS/Icons for cities/${rainyWeather[i].cityName.toLowerCase()}.svg')`;
-  })
+  let slicedsortedRainyWeatherValues=setMinMax();
+ }
 
- 
-  }
+
 }
 
-  document.querySelector("#displaynum").addEventListener("change", ()=>{ 
+document.querySelector("#curser-left").addEventListener('click',()=>{
+  document.querySelector("#middle-block").scrollleft+=300;
+  console.log("scroll-left")
+})
+document.querySelector("#curser-right").addEventListener('click',()=>{
+  document.querySelector("#middle-block").scrollleft-=300;
+  console.log("scroll-right")
+})
 
-  let cityArr=[];
-  let limiter=document.querySelector("#displaynum").value; 
-  //console.log(limiter); 
-  //console.log(sortedSunnyWeatherValues)
-  if(currWeather=='sunny'){
-    if(sortedSunnyWeatherValues.length>limiter){
-      cityArr=sortedSunnyWeatherValues.slice(0,limiter);
-    }
-    else{
-      cityArr=sortedSunnyWeatherValues;
-    }
-  }
-  else if(currWeather=='snow'){
-    if(sortedsnowWeatherValues.length>limiter){
-      cityArr=sortedsnowWeatherValues.slice(0,limiter);
-    }
-    else{
-      cityArr=sortedsnowWeatherValues;
-    }
-  }
-  else if(currWeather=='rainy'){
-    if(sortedRainyWeatherValues.length>limiter){
-      cityArr=sortedRainyWeatherValues.slice(0,limiter);
-    } 
-    else{
-      cityArr=sortedRainyWeatherValues;
-    }
-  }
-  //console.log(cityArr);
-  for(let i = 0; i<cityArr.length; i++){
-    console.log("runningdasd");
-    let time = new Date().toLocaleString("en-US", {
-      timeZone: cityArr[i].timeZone,
-      timeStyle: "medium",
-      hourCycle: "h12",
-    });
-    let card="";
-    card += `<div class="mid">
-              <div class="mid-item">
-                <div>${cityArr[i].cityName}</div>
-                <div class="mid-img">
-                  <img src="HTML & CSS/Weather Icons/rainyIcon.svg" alt="sunny" />
-                  <span>${cityArr[i].temperature}</span>
-                </div>
-              </div>
-              <div>${cityArr[i]}</div>
-              <div>
-                <img
-                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
-                  alt="rainy"
-                />${cityArr[i].humidity}
-              </div>
-              <div>
-                <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" 
-                />${cityArr[i].precipitation}
-              </div>
-            </div>`;
-            
-  }
-  console.log(card);
-  document.querySelector(".middle-block").innerHTML = card;
-
- })
