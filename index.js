@@ -22,6 +22,7 @@ import {setCityTimeZones} from "./export.js";
         value.dropdown();
         value.sortByContinent();        
         setInterval(value.filtercitycards.bind(value), 1000);
+        setInterval(value.vaildcity.bind(value), 1000);
         value.setWeathercard("sunny");
         document.querySelector("#inputdata").addEventListener("change", value.vaildcity.bind(value));
     });
@@ -31,7 +32,7 @@ import {setCityTimeZones} from "./export.js";
  */
   function WeatherTemplate(weather_data) {
     this.weather_data = weather_data;
-    this.selectedCity;
+    this.selectedCity="anadyr";
     this.currWeather;
     this.sortedSunnyWeatherValues = [];
     this.sortedsnowWeatherValues = [];
