@@ -212,6 +212,7 @@ import changeToFarenheit from "./export.js";
     let timeZone = this.weather_data[`${dropdown}`].timeZone;
     let currTime = this.setTime(timeZone);
     time.innerHTML = currTime;
+    time.style.color = "#ffe5b4";
      // document.getElementById("top-time").innerHTML = this.setTime(timeZone);;
     // let time = document.querySelector("#top-time");
     
