@@ -15,8 +15,8 @@ let currWeather;
       setTimeout(() => setWeathercard("sunny"), 300);
       setInterval(filterCityCards, 1000);
       setInterval(updateValidCityDetails, 1000);
-      //setInterval(() => display(arr), 1000);
-      //sortByContinent();
+      setInterval(() => displayCityCards, 1000);
+      sortByContinent();
       updateValidCityDetails();
     });
 })(); //IIFE
@@ -273,11 +273,6 @@ function sortCities(arr, constraint) {
 function displayCityCards(arr) {
   let card = "";
   for (let i = 0; i < arr.length; i++) {
-    let time = new Date().toLocaleString("en-US", {
-      timeZone: arr[i].timeZone,
-      timeStyle: "short",
-      hourCycle: "h12",
-    });
     card += `<div class="mid">
               <div class="mid-item">
                 <div>${arr[i].cityName}</div>
@@ -414,4 +409,108 @@ document.querySelector("#curser-left").addEventListener("click", () => {
 }); //Next button click
 document.querySelector("#curser-right").addEventListener("click", () => {
   document.querySelector("#middle-block").scrollLeft += 300;
+});
+
+//Task 3
+let continentOrder = 0;
+let temperatureOrder = 1;
+function setCityTimeZones(city) {
+  return city.timeZone.split("/")[0];
+}
+/**
+ * @desc Display the lower card and based on the user selected continent and temperature.
+ */
+function displayContinentCards() {
+  let continentCard = ``;
+  let cityTimeZones = allCities.map(setCityTimeZones);
+  for (let i = 0; i < 12; i++) {
+    let timeNow = getTime(allCities[i]["timeZone"]);
+    let noonNow = timeNow.slice(-2);
+    let hourAndMin = timeNow.split(":");
+    continentCard += `<div class="grid-item">
+              <div class="grid-text">
+                <p class="country-names">${cityTimeZones[i]}</p>
+                <span class="btm-temp">${allCities[i].temperature}</span>
+              </div>
+              <p class="grid-text">
+              ${allCities[i].cityName}, ${hourAndMin[0]}:${hourAndMin[1]} ${noonNow}<span
+                  ><img
+                    src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                    alt="rainy"
+                  />
+                  ${allCities[i].humidity}</span
+                >
+              </p>
+        </div>`;
+  }
+  document.querySelector(".bottom-grid").innerHTML = continentCard;
+}
+let allCities;
+/**
+ * @desc this function Sort the Continent based on asscending or decending orders based on the user preference.
+ */
+function sortByContinent() {
+  allCities = Object.values(weatherData);
+  if (continentOrder == 0) {
+    if (temperatureOrder == 0) {
+      allCities.sort((a, b) => {
+        if (a.timeZone.split("/")[0] === b.timeZone.split("/")[0]) {
+          return parseInt(a.temperature) < parseInt(b.temperature) ? -1 : 1;
+        } else {
+          return a.timeZone.split("/")[0] < b.timeZone.split("/")[0] ? -1 : 1;
+        }
+      });
+    } else {
+      allCities.sort((a, b) => {
+        if (a.timeZone.split("/")[0] === b.timeZone.split("/")[0]) {
+          return parseInt(b.temperature) < parseInt(a.temperature) ? -1 : 1;
+        } else {
+          return a.timeZone.split("/")[0] < b.timeZone.split("/")[0] ? -1 : 1;
+        }
+      });
+    }
+  } else {
+    if (temperatureOrder == 0) {
+      allCities.sort((a, b) => {
+        if (a.timeZone.split("/")[0] === b.timeZone.split("/")[0]) {
+          return parseInt(a.temperature) < parseInt(b.temperature) ? -1 : 1;
+        } else {
+          return b.timeZone.split("/")[0] < a.timeZone.split("/")[0] ? -1 : 1;
+        }
+      });
+    } else {
+      allCities.sort((a, b) => {
+        if (a.timeZone.split("/")[0] === b.timeZone.split("/")[0]) {
+          return parseInt(b.temperature) < parseInt(a.temperature) ? -1 : 1;
+        } else {
+          return b.timeZone.split("/")[0] < a.timeZone.split("/")[0] ? -1 : 1;
+        }
+      });
+    }
+  }
+  displayContinentCards();
+}
+document.querySelector("#continent").addEventListener("click", function () {
+  if (continentOrder == 0) {
+    continentOrder = 1;
+    document.querySelector("#bottom-continent-arrow").src =
+      "HTML & CSS/General Images & Icons/arrowUp.svg";
+  } else if (continentOrder == 1) {
+    continentOrder = 0;
+    document.querySelector("#bottom-continent-arrow").src =
+      "HTML & CSS/General Images & Icons/arrowDown.svg";
+  }
+  sortByContinent();
+});
+document.querySelector("#bottom-temp").addEventListener("click", function () {
+  if (temperatureOrder == 0) {
+    temperatureOrder = 1;
+    document.querySelector("#bottom-temp-arrow").src =
+      "HTML & CSS/General Images & Icons/arrowUp.svg";
+  } else if (temperatureOrder == 1) {
+    temperatureOrder = 0;
+    document.querySelector("#bottom-temp-arrow").src =
+      "HTML & CSS/General Images & Icons/arrowDown.svg";
+  }
+  sortByContinent();
 });
