@@ -1,5 +1,5 @@
 import changeToFarenheit from "./export.js";
-var weather_Data;
+var weatherData;
 let currWeather;
 
 /**
@@ -10,7 +10,7 @@ let currWeather;
   fetch("data.json")
     .then((data) => data.json())
     .then((result) => {
-      weather_Data = result;
+      weatherData = result;
       updateDropDown();
       setTimeout(() => setWeathercard("sunny"), 300);
       setInterval(filterCityCards, 1000);
@@ -24,10 +24,10 @@ let currWeather;
  * @desc this function gives the updateDropDown for city selection
  */
 function updateDropDown() {
-  var city = Object.keys(weather_Data);
+  var city = Object.keys(weatherData);
   var option = ``;
   for (let i = 0; i < city.length; i++) {
-    option += `<option>${weather_Data[city[i]].cityName}</option>`;
+    option += `<option>${weatherData[city[i]].cityName}</option>`;
   }
   document.querySelector("#data_dropdown").innerHTML = option;
 }
@@ -44,7 +44,7 @@ document
  */
 function userSelectedCity() {
   selectedCity = document.querySelector("#inputdata").value.toLowerCase();
-  let city = Object.keys(weather_Data);
+  let city = Object.keys(weatherData);
   let currentCity = selectedCity;
   let flag = 0;
   for (let i = 0; i < city.length; i++) {
@@ -87,33 +87,33 @@ function updateInValidCityDetails() {
 function updateValidCityDetails() {
   var updateDropDown = document.querySelector("#inputdata").value.toLowerCase();
   let valid = false;
-  for (const city of Object.keys(weather_Data)) {
+  for (const city of Object.keys(weatherData)) {
     if (city == updateDropDown.toLowerCase()) {
       valid = true;
     }
   }
   if (!valid) return;
-  var city = Object.keys(weather_Data);
+  var city = Object.keys(weatherData);
   //Image
   document.getElementById(
     "top-img"
   ).src = `HTML & CSS/Icons for cities/${updateDropDown}.svg`;
   //temperature
-  var temp = weather_Data[updateDropDown].temperature;
+  var temp = weatherData[updateDropDown].temperature;
   document.getElementById("top-tempc").innerHTML = temp;
   //humidity
   document.getElementById("top-humidity").innerHTML =
-    weather_Data[updateDropDown].humidity;
+    weatherData[updateDropDown].humidity;
   //precipitation
   document.getElementById("top-precipitation").innerHTML =
-    weather_Data[updateDropDown].precipitation;
+    weatherData[updateDropDown].precipitation;
   //temperature F
-  let tempInCelsius = parseInt(weather_Data[updateDropDown].temperature);
+  let tempInCelsius = parseInt(weatherData[updateDropDown].temperature);
   tempInFahrenheit = changeToFarenheit(tempInCelsius).toFixed(0) + "F";
   document.getElementById("top-far").innerHTML = tempInFahrenheit;
   //Date and time
   let datetimeArr;
-  datetimeArr = weather_Data[updateDropDown].dateAndTime.split(",");
+  datetimeArr = weatherData[updateDropDown].dateAndTime.split(",");
   document.getElementById("top-time").innerHTML = datetimeArr[1].slice(0, -2);
   document.getElementById("top-date").innerHTML = datetimeArr[0];
   //Date
@@ -122,17 +122,17 @@ function updateValidCityDetails() {
   document.getElementById("top-date").innerHTML = currDate;
   // Time
   let time = document.querySelector("#top-time");
-  let timeZone = weather_Data[`${updateDropDown}`].timeZone;
+  let timeZone = weatherData[`${updateDropDown}`].timeZone;
   let currTime = getTime(timeZone);
   time.innerHTML = currTime;
   //Temperature Changing Left
   let sixtemp = [
-    parseInt(weather_Data[`${updateDropDown}`].temperature.slice(0, -2)),
-    parseInt(weather_Data[`${updateDropDown}`].temperature.slice(0, -2)),
+    parseInt(weatherData[`${updateDropDown}`].temperature.slice(0, -2)),
+    parseInt(weatherData[`${updateDropDown}`].temperature.slice(0, -2)),
   ];
   for (let i = 0; i < 4; i++) {
     sixtemp[i + 2] = parseInt(
-      weather_Data[`${updateDropDown}`].nextFiveHrs[i].slice(0, -2)
+      weatherData[`${updateDropDown}`].nextFiveHrs[i].slice(0, -2)
     );
   }
   for (let i = 0; i < 6; i++) {
@@ -348,7 +348,7 @@ function filterCityCards() {
  */
 function setWeathercard(weather) {
   currWeather = weather;
-  var cityValues = Object.values(weather_Data);
+  var cityValues = Object.values(weatherData);
   let sunnyWeather = [];
   let snowWeather = [];
   let rainyWeather = [];
