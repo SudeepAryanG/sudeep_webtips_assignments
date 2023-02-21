@@ -28,7 +28,7 @@ body {
   text-align: center;
   width: 100%;
 }
-#dropdown {
+#inputdata {
   background-color: var(--bg-input-box);
   color: var(--primary-white);
   font-size: 1.5rem;
@@ -59,11 +59,11 @@ body {
   color: var(--primary-white);
   text-align: start;
 }
-#top-time-1 {
+#top-time {
   color: var(--bright-yellow-text);
   font-size: 1.5em;
 }
-.time-color {
+#time-color {
   color: var(--bright-yellow-text);
 }
 #top-date {
@@ -97,6 +97,9 @@ body {
   color: var(--primary-white);
   font-family: "Poppins", sans-serif;
   padding: 1%;
+  max-width: 100%;
+  min-height: 300px;
+  position: relative;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -120,10 +123,34 @@ body {
 .middle-block {
   column-gap: 40px;
   display: flex;
-  margin-left: 13%;
+  grid-auto-flow: column;
+  /* margin-left: 13%; */
+  margin-left: 3%;
   overflow-x: scroll;
   overflow-y: hidden;
-  width: 70%;
+  width: 87vw;
+}
+#curser-left{
+  position: absolute;
+  top: 50%;
+  font-size: x-large;
+  border-radius: 50%;
+  padding: 10px;
+  /* left:2%; */
+  /* margin: 1%; */
+  cursor: pointer;
+  opacity: 0.4;
+}
+#curser-right{
+  position: absolute;
+    top: 45%;
+    font-size: x-large;
+    border-radius: 50%;
+    padding: 10px;
+    right:4.5%;
+    margin: 1%;
+    cursor: pointer;
+    opacity: 0.4;
 }
 .middle-block::-webkit-scrollbar {
   display: none;
@@ -131,9 +158,8 @@ body {
 .middle-item {
   align-items: center;
   background-color: rgb(34, 34, 34);
-  background-image: url("HTML & CSS/Icons for cities/newyork.svg");
+  /* background-image: url("HTML & CSS/Icons for cities/newyork.svg"); */
   background-size: auto;
-
   height: 200px;
   justify-content: center;
   margin: 10px;
@@ -149,11 +175,12 @@ body {
 .mid:hover {
   transform: scale(1.08);
 }
-.mid {
+.mid{
   background-color: var(--primary-black);
   background-image: url("HTML & CSS/Icons for cities/newyork.svg");
-  background-position: bottom right;
+  background-position: right bottom;
   background-repeat: no-repeat;
+  background-size: 170px auto;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(4, 30px);
@@ -171,6 +198,7 @@ body {
 .mid-img {
   text-align: end;
 }
+
 .bottom-container {
   background-color: var(--primary-black);
   color: white;
@@ -218,6 +246,12 @@ body {
 .grid-item:hover {
   background-color: #535252;
   transform: scale(1.05);
+}
+#continent{
+  cursor: pointer;
+}
+#bottom-temp{
+  cursor: pointer;
 }
 @media only screen and (max-width: 600px) {
   .bottom-grid {
@@ -267,7 +301,7 @@ body {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
   }
-  .dropdown {
+  #dropdown {
     font-size: 1rem;
   }
   #city-logo {
