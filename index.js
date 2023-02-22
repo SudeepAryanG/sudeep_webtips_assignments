@@ -16,7 +16,7 @@ let currWeather;
       setInterval(filterCityCards, 1000);
       setInterval(updateValidCityDetails, 1000);
       setInterval(() => displayCityCards, 1000);
-      sortByContinent();
+      sortCitiesByContAndTemp();
       updateValidCityDetails();
     });
 })(); //IIFE
@@ -86,6 +86,7 @@ function updateInValidCityDetails() {
  */
 function updateValidCityDetails() {
   var updateDropDown = document.querySelector("#inputdata").value.toLowerCase();
+  document.querySelector("#inputdata").style.borderColor = "";
   let valid = false;
   for (const city of Object.keys(weatherData)) {
     if (city == updateDropDown.toLowerCase()) {
@@ -424,16 +425,16 @@ function displayContinentCards() {
   let continentCard = ``;
   let cityTimeZones = allCities.map(setCityTimeZones);
   for (let i = 0; i < 12; i++) {
-    let timeNow = getTime(allCities[i]["timeZone"]);
-    let noonNow = timeNow.slice(-2);
-    let hourAndMin = timeNow.split(":");
+    let currentTime = getTime(allCities[i]["timeZone"]);
+    let currentSession = currentTime.slice(-2);
+    let hourAndMin = currentTime.split(":");
     continentCard += `<div class="grid-item">
               <div class="grid-text">
                 <p class="country-names">${cityTimeZones[i]}</p>
                 <span class="btm-temp">${allCities[i].temperature}</span>
               </div>
               <p class="grid-text">
-              ${allCities[i].cityName}, ${hourAndMin[0]}:${hourAndMin[1]} ${noonNow}<span
+              ${allCities[i].cityName}, ${hourAndMin[0]}:${hourAndMin[1]} ${currentSession}<span
                   ><img
                     src="HTML & CSS/Weather Icons/humidityIcon.svg"
                     alt="rainy"
@@ -447,9 +448,9 @@ function displayContinentCards() {
 }
 let allCities;
 /**
- * @desc this function Sort the Continent based on asscending or decending orders based on the user preference.
+ * @desc  this function is to sort the cities of continent in ascending or descending order based on the user preference
  */
-function sortByContinent() {
+function sortCitiesByContAndTemp() {
   allCities = Object.values(weatherData);
   if (continentOrder == 0) {
     if (temperatureOrder == 0) {
@@ -500,7 +501,7 @@ document.querySelector("#continent").addEventListener("click", function () {
     document.querySelector("#bottom-continent-arrow").src =
       "HTML & CSS/General Images & Icons/arrowDown.svg";
   }
-  sortByContinent();
+  sortCitiesByContAndTemp();
 });
 document.querySelector("#bottom-temp").addEventListener("click", function () {
   if (temperatureOrder == 0) {
@@ -512,5 +513,5 @@ document.querySelector("#bottom-temp").addEventListener("click", function () {
     document.querySelector("#bottom-temp-arrow").src =
       "HTML & CSS/General Images & Icons/arrowDown.svg";
   }
-  sortByContinent();
+  sortCitiesByContAndTemp();
 });
