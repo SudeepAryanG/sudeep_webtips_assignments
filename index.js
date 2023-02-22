@@ -1,6 +1,4 @@
 import changeToFarenheit from "./export.js";
-var weatherData;
-let currWeather;
 
 /**
  * @desc function to fetch weather data from the json file and store in a
@@ -39,7 +37,7 @@ let currWeather;
     this.sortedSunnyWeatherValues = [];
     this.sortedSnowWeatherValues = [];
     this.sortedRainyWeatherValues = [];
-    this.allCities;
+    this.allCities=Object.keys(this.weatherData);
     this.continentOrder = 0;
     this.temperatureOrder = 1;
 
@@ -140,7 +138,14 @@ let currWeather;
    */
   WeatherTemplate.prototype.updateValidCityDetails = function () {
     var updateDropDown = document.querySelector("#inputdata").value.toLowerCase();
-    
+    let valid = false;
+    for (const city of Object.keys(this.weatherData)) {
+      if (city == updateDropDown.toLowerCase()) {
+        valid = true;
+      }
+    }
+    if (!valid) return;
+    document.querySelector("#inputdata").style.borderColor = "";
     //Image
     document.getElementById(
       "top-img"
@@ -164,40 +169,17 @@ let currWeather;
     document.getElementById("top-time").innerHTML = datetimeArr[1].slice(0, -2);
     document.getElementById("top-date").innerHTML = datetimeArr[0];
     //Date
-    let monthArr = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    let dateSplit = datetimeArr[0];
-    let dateArr = dateSplit.split("/");
-    let dateInWords =
-      String(dateArr[1].padStart(2, "0")) +
-      "-" +
-      monthArr[dateArr[0] - 1] +
-      "-" +
-      dateArr[2];
-    document.getElementById("top-date").innerHTML = dateInWords;
+    let dateArr = datetimeArr[0];
+    let currDate = this.getDate(dateArr);
+    document.getElementById("top-date").innerHTML = currDate;
     // Time
-    let time;
-    time = new Date().toLocaleString("en-US", {
-      timeZone: this.weatherData[this.selectedCity].timeZone,
-      timeStyle: "medium",
-      hourCycle: "h12",
-    });
-    document.getElementById("top-time").innerHTML = time;
+    let time = document.querySelector("#top-time");
+    let timeZone = this.weatherData[`${updateDropDown}`].timeZone;
+    let currTime = this.getTime(timeZone);
+    time.innerHTML = currTime;
     //Hours changing with wrt to time.
-    let hour = parseInt(time.split(":")[0]);
-    let noon = time.slice(-2);
+    let hour = parseInt(currTime.split(":")[0]);
+    let noon = currTime.slice(-2);
     for (let i = 0; i < 6; i++) {
       if (hour > 12) {
         hour = hour - 12;
@@ -256,7 +238,7 @@ let currWeather;
  * @param {Srting} timeZone timeZone of the currently selected city
  * @returns current time
  */
-function getTime(timeZone) {
+WeatherTemplate.prototype.getTime=function(timeZone){
   return new Date().toLocaleString("en-US", {
     timeZone: timeZone,
     timeStyle: "medium",
@@ -269,7 +251,7 @@ function getTime(timeZone) {
  * @param {String} datetimeArr date of current selected city
  * @returns current date
  */
-function getDate(datetimeArr) {
+WeatherTemplate.prototype.getDate=function(datetimeArr) {
   const monthArr = [
     "Jan",
     "Feb",
@@ -324,18 +306,18 @@ function getDate(datetimeArr) {
  * @desc function to display cards containing sorted cities  as per user preferences
  * @param {*} arr all cities data in string format.
  */
-WeatherTemplate.prototype.displaycitycards = function(arr) {
+WeatherTemplate.prototype.displayCityCards = function(arr) {
   let card = "";
   for (let i = 0; i < arr.length; i++) {
     card += `<div class="mid">
               <div class="mid-item">
                 <div>${arr[i].cityName}</div>
                 <div class="mid-img">
-                  <img src="HTML & CSS/Weather Icons/${currWeather}Icon.svg" alt="sunny" />
+                  <img src="HTML & CSS/Weather Icons/${this.currWeather}Icon.svg" alt="sunny" />
                   <span>${arr[i].temperature}</span>
                 </div>
               </div>
-              <div class="city-card-time">${getTime(arr[i]["timeZone"])}</div>
+              <div class="city-card-time">${this.getTime(arr[i]["timeZone"])}</div>
               <div>
                 <img
                   src="HTML & CSS/Weather Icons/humidityIcon.svg"
@@ -360,19 +342,20 @@ WeatherTemplate.prototype.displaycitycards = function(arr) {
  * @desc function to manage the numberof cities cards displayed based on
  * display top like minimumand maximum numbers.
  */
-WeatherTemplate.prototype.filtercitycards = function () {
+WeatherTemplate.prototype.filterCityCards = function () {
   let limiter = parseInt(document.querySelector("#displaynum").value);
-  if (limiter < 3) return;
+  if (limiter < 3) limiter=3;
+  if(limiter>10) limiter=10;
   let sortedWeatherValues;
-  switch (currWeather) {
+  switch (this.currWeather) {
     case "sunny":
-      sortedWeatherValues = sortedSunnyWeatherValues;
+      sortedWeatherValues = this.sortedSunnyWeatherValues;
       break;
     case "snowflake":
-      sortedWeatherValues = sortedSnowWeatherValues;
+      sortedWeatherValues = this.sortedSnowWeatherValues;
       break;
     default:
-      sortedWeatherValues = sortedRainyWeatherValues;
+      sortedWeatherValues = this.sortedRainyWeatherValues;
       break;
   }
   if (limiter < 4) {
@@ -383,9 +366,9 @@ WeatherTemplate.prototype.filtercitycards = function () {
     document.querySelector("#curser-right").style.display = "block";
   }
   if (sortedWeatherValues.length > limiter) {
-    displayCityCards(sortedWeatherValues.slice(0, limiter));
+    this.displayCityCards(sortedWeatherValues.slice(0, limiter));
   } else {
-    displayCityCards(sortedWeatherValues);
+    this.displayCityCards(sortedWeatherValues);
   }
 }
 
@@ -396,8 +379,8 @@ WeatherTemplate.prototype.filtercitycards = function () {
  * selected weather like sunny,snow, rainny
  */
 WeatherTemplate.prototype.setWeathercard = function (weather) {
-  currWeather = weather;
-  var cityValues = Object.values(weatherData);
+  this.currWeather = weather;
+  var cityValues = Object.values(this.weatherData);
   let sunnyWeather = [];
   let snowWeather = [];
   let rainyWeather = [];
@@ -418,9 +401,9 @@ WeatherTemplate.prototype.setWeathercard = function (weather) {
       }
     });
     // Sort the cities in descending order of temperature
-    sortedSunnyWeatherValues = sortCities(sunnyWeather, "temperature");
+    this.sortedSunnyWeatherValues = this.sortCities(sunnyWeather, "temperature");
     //Display the city details in cards
-    filterCityCards();
+    this.filterCityCards();
   }
   //SNOW Weather
   if (weather == "snowflake") {
@@ -438,8 +421,8 @@ WeatherTemplate.prototype.setWeathercard = function (weather) {
       }
     }
     // Sort the cities in descending order of temperature
-    sortedSnowWeatherValues = sortCities(snowWeather, "temperature");
-    filterCityCards();
+    this.sortedSnowWeatherValues = this.sortCities(snowWeather, "temperature");
+    this.filterCityCards();
     //Display the city details in cards
   }
   //Rainy weather
@@ -452,14 +435,14 @@ WeatherTemplate.prototype.setWeathercard = function (weather) {
     });
     document.getElementById("rainy").style.borderBottom = "2px solid #1E90FF";
     //Sort cities in descending order of humidity
-    sortedRainyWeatherValues = sortCities(rainyWeather, "humidity");
+    this.sortedRainyWeatherValues = this.sortCities(rainyWeather, "humidity");
     //Display the city details in cards
-    filterCityCards();
+    this.filterCityCards();
   }
 }
 
 //Task 3
-function setCityTimeZones(city) {
+WeatherTemplate.prototype.setCityTimeZones= function(city) {
   return city.timeZone.split("/")[0];
 }
 /**
@@ -467,38 +450,37 @@ function setCityTimeZones(city) {
  */
 WeatherTemplate.prototype.displayContinentCards = function () {
   let continentCard = ``;
-  let cityTimeZones = allCities.map(setCityTimeZones);
+  let cityTimeZones = this.allCities.map(this.setCityTimeZones);
   for (let i = 0; i < 12; i++) {
-    let currentTime = getTime(allCities[i]["timeZone"]);
+    let currentTime = this.getTime(this.allCities[i]["timeZone"]);
     let currentSession = currentTime.slice(-2);
     let hourAndMin = currentTime.split(":");
     continentCard += `<div class="grid-item">
               <div class="grid-text">
                 <p class="country-names">${cityTimeZones[i]}</p>
-                <span class="btm-temp">${allCities[i].temperature}</span>
+                <span class="btm-temp">${this.allCities[i].temperature}</span>
               </div>
               <p class="grid-text">
-              ${allCities[i].cityName}, ${hourAndMin[0]}:${hourAndMin[1]} ${currentSession}<span
+              ${this.allCities[i].cityName}, ${hourAndMin[0]}:${hourAndMin[1]} ${currentSession}<span
                   ><img
                     src="HTML & CSS/Weather Icons/humidityIcon.svg"
                     alt="rainy"
                   />
-                  ${allCities[i].humidity}</span
+                  ${this.allCities[i].humidity}</span
                 >
               </p>
         </div>`;
   }
   document.querySelector(".bottom-grid").innerHTML = continentCard;
 }
-let allCities;
 /**
  * @desc  this function is to sort the cities of continent in ascending or descending order based on the user preference
  */
 WeatherTemplate.prototype.sortCitiesByContAndTemp= function() {
-  allCities = Object.values(weatherData);
-  if (continentOrder == 0) {
-    if (temperatureOrder == 0) {
-      allCities.sort((a, b) => {
+  this.allCities = Object.values(this.weatherData);
+  if (this.continentOrder == 0) {
+    if (this.temperatureOrder == 0) {
+      this.allCities.sort((a, b) => {
         if (a.timeZone.split("/")[0] === b.timeZone.split("/")[0]) {
           return parseInt(a.temperature) < parseInt(b.temperature) ? -1 : 1;
         } else {
@@ -506,7 +488,7 @@ WeatherTemplate.prototype.sortCitiesByContAndTemp= function() {
         }
       });
     } else {
-      allCities.sort((a, b) => {
+      this.allCities.sort((a, b) => {
         if (a.timeZone.split("/")[0] === b.timeZone.split("/")[0]) {
           return parseInt(b.temperature) < parseInt(a.temperature) ? -1 : 1;
         } else {
@@ -515,8 +497,8 @@ WeatherTemplate.prototype.sortCitiesByContAndTemp= function() {
       });
     }
   } else {
-    if (temperatureOrder == 0) {
-      allCities.sort((a, b) => {
+    if (this.temperatureOrder == 0) {
+      this.allCities.sort((a, b) => {
         if (a.timeZone.split("/")[0] === b.timeZone.split("/")[0]) {
           return parseInt(a.temperature) < parseInt(b.temperature) ? -1 : 1;
         } else {
@@ -524,7 +506,7 @@ WeatherTemplate.prototype.sortCitiesByContAndTemp= function() {
         }
       });
     } else {
-      allCities.sort((a, b) => {
+      this.allCities.sort((a, b) => {
         if (a.timeZone.split("/")[0] === b.timeZone.split("/")[0]) {
           return parseInt(b.temperature) < parseInt(a.temperature) ? -1 : 1;
         } else {
@@ -533,5 +515,5 @@ WeatherTemplate.prototype.sortCitiesByContAndTemp= function() {
       });
     }
   }
-  displayContinentCards();
+  this.displayContinentCards();
 }
