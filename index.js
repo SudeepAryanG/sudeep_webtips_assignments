@@ -1,41 +1,39 @@
 import changeToFahrenheit from "./export.js";
-import changeToFahrenheit from "./export.js";
 
 /**
  * @desc function to fetch weather data from the json file and store in a
  * global variable, and also gives the updateDropDown based on user preferences
  */
 
-
 (function () {
   fetch("data.json")
     .then((data) => data.json())
     .then((result) => {
       let value = new WeatherTemplate(result);
-      value.__proto__.updateDropDown=function(){
+      value.__proto__.updateDropDown = function () {
         var city = Object.keys(this.weatherData);
         var option = ``;
-        for (let i = 0; i < city.length; i++)
-        {
+        for (let i = 0; i < city.length; i++) {
           option += `<option>${this.weatherData[city[i]].cityName}</option>`;
         }
         document.querySelector("#data_dropdown").innerHTML = option;
-        }
-        value.updateDropDown();
-        value.sortCitiesByContAndTemp();        
-        setInterval(value.filterCityCards.bind(value), 1000);
-        setInterval(value.updateValidCityDetails.bind(value), 1000);
-        value.setWeathercard("sunny");
-        document.querySelector("#inputdata").addEventListener("change", value.updateValidCityDetails.bind(value));
+      };
+      value.updateDropDown();
+      value.sortCitiesByContAndTemp();
+      setInterval(value.filterCityCards.bind(value), 1000);
+      setInterval(value.updateValidCityDetails.bind(value), 1000);
+      value.setWeathercard("sunny");
+      document
+        .querySelector("#inputdata")
+        .addEventListener("change", value.updateValidCityDetails.bind(value));
     });
 })(); //IIFE
 
-
 /**
- * 
+ *
  * @param {String} weatherData Class Constructor function for all global variables and event listeners
  */
-  class WeatherTemplate {
+class WeatherTemplate {
   constructor(weatherData) {
     this.weatherData = weatherData;
     this.selectedCity = "Anadyr";
@@ -93,9 +91,11 @@ import changeToFahrenheit from "./export.js";
       this.sortCitiesByContAndTemp();
     });
   }
-  /** 
-     * @desc function to check whether user has entered vaild input city and update the details
-     */
+  
+  /**
+   * @desc function to check whether user has entered vaild input city and update the details
+   */
+
   userSelectedCity() {
     this.selectedCity = document
       .querySelector("#inputdata")
@@ -113,14 +113,15 @@ import changeToFahrenheit from "./export.js";
       this.updateInValidCityDetails();
     }
   }
+
   /**
-     * @desc this function sets the null value for weather details when
-     * invalid city is selected
-     */
+   * @desc this function sets the null value for weather details when
+   * invalid city is selected
+   */
+
   updateInValidCityDetails() {
     document.querySelector("#top-tempc").innerText = "-";
-    document.querySelector("#top-fahrenheit").innerText = "-";
-    document.querySelector("#top-fahrenheit").innerText = "-";
+    document.querySelector("#top-fahrenheit").innerText = "-"; 
     document.querySelector("#top-humidity").innerText = "-";
     document.querySelector("#top-precipitation").innerText = "-";
     document.querySelector("#top-date").innerText = "";
@@ -134,21 +135,24 @@ import changeToFahrenheit from "./export.js";
       document.querySelector(`#temperature-${i + 1}`).innerText = "-";
     }
   }
+
   /**
-     * @desc Based on the user selected city the various fields such as
-     *  temperature,precipitation,humidity,live time,date and next
-     * five hours temperature and climate icons we get updated.
-     */
+   * @desc Based on the user selected city the various fields such as
+   *  temperature,precipitation,humidity,live time,date and next
+   * five hours temperature and climate icons we get updated.
+   */
+
   updateValidCityDetails() {
-    var updateDropDown = document.querySelector("#inputdata").value.toLowerCase();
+    var updateDropDown = document
+      .querySelector("#inputdata")
+      .value.toLowerCase();
     let valid = false;
     for (const city of Object.keys(this.weatherData)) {
       if (city == updateDropDown.toLowerCase()) {
         valid = true;
       }
     }
-    if (!valid)
-      return;
+    if (!valid) return;
     document.querySelector("#inputdata").style.borderColor = "";
     //Image
     document.getElementById(
@@ -165,8 +169,6 @@ import changeToFahrenheit from "./export.js";
       this.weatherData[updateDropDown].precipitation;
     //temperature F
     let tempInCelsius = parseInt(this.weatherData[updateDropDown].temperature);
-    let tempInFahrenheit = changeToFahrenheit(tempInCelsius).toFixed(0) + " F";
-    document.getElementById("top-fahrenheit").innerHTML = tempInFahrenheit;
     let tempInFahrenheit = changeToFahrenheit(tempInCelsius).toFixed(0) + " F";
     document.getElementById("top-fahrenheit").innerHTML = tempInFahrenheit;
     //Date and time
@@ -238,6 +240,7 @@ import changeToFahrenheit from "./export.js";
       }
     }
   }
+
   /**
    * @desc this function sets the current time for the specified timezone
    * @param {Srting} timeZone timeZone of the currently selected city
@@ -250,6 +253,7 @@ import changeToFahrenheit from "./export.js";
       hourCycle: "h12",
     });
   }
+
   /**
    * @desc this function gives the current date for the selected city
    * @param {String} datetimeArr date of current selected city
@@ -272,16 +276,19 @@ import changeToFahrenheit from "./export.js";
     ];
     const dateSplit = datetimeArr;
     const dateArr = dateSplit.split("/");
-    const dateInWords = String(dateArr[1]) + "-" + monthArr[dateArr[0] - 1] + "-" + dateArr[2];
+    const dateInWords =
+      String(dateArr[1]) + "-" + monthArr[dateArr[0] - 1] + "-" + dateArr[2];
     return dateInWords;
   }
+
   //Task2
   /**
-     * @desc function to sort cities based on sunny rainy or cold option choosen by the user
-     * @param {@String} arr all values of cities data.
-     * @param {*String} constraint type of weather like suuny,cold,rainy
-     * @returns returns the sorted city array.
-     */
+   * @desc function to sort cities based on sunny rainy or cold option choosen by the user
+   * @param {@String} arr all values of cities data.
+   * @param {*String} constraint type of weather like suuny,cold,rainy
+   * @returns returns the sorted city array.
+   */
+
   sortCities(arr, constraint) {
     switch (constraint) {
       case "temperature":
@@ -302,11 +309,13 @@ import changeToFahrenheit from "./export.js";
     }
     return arr;
   }
+
   //Display Middle Cards
   /**
    * @desc function to display cards containing sorted cities  as per user preferences
    * @param {*} arr all cities data in string format.
    */
+
   displayCityCards(arr) {
     let card = "";
     for (let i = 0; i < arr.length; i++) {
@@ -314,11 +323,15 @@ import changeToFahrenheit from "./export.js";
               <div class="mid-item">
                 <div>${arr[i].cityName}</div>
                 <div class="mid-img">
-                  <img src="HTML & CSS/Weather Icons/${this.currWeather}Icon.svg" alt="sunny" />
+                  <img src="HTML & CSS/Weather Icons/${
+                    this.currWeather
+                  }Icon.svg" alt="sunny" />
                   <span>${arr[i].temperature}</span>
                 </div>
               </div>
-              <div class="city-card-time">${this.getTime(arr[i]["timeZone"])}</div>
+              <div class="city-card-time">${this.getTime(
+                arr[i]["timeZone"]
+              )}</div>
               <div>
                 <img
                   src="HTML & CSS/Weather Icons/humidityIcon.svg"
@@ -333,19 +346,21 @@ import changeToFahrenheit from "./export.js";
     }
     document.querySelector(".middle-block").innerHTML = card;
     document.querySelectorAll(".mid").forEach((element, i) => {
-      element.style.backgroundImage = `url('./HTML & CSS/Icons for cities/${arr[i].cityName.toLowerCase()}.svg')`;
+      element.style.backgroundImage = `url('./HTML & CSS/Icons for cities/${arr[
+        i
+      ].cityName.toLowerCase()}.svg')`;
     });
   }
+
   /**
    * @desc function to manage the numberof cities cards displayed based on
    * display top like minimumand maximum numbers.
    */
+
   filterCityCards() {
     let limiter = parseInt(document.querySelector("#displaynum").value);
-    if (limiter < 3)
-      limiter = 3;
-    if (limiter > 10)
-      limiter = 10;
+    if (limiter < 3) limiter = 3;
+    if (limiter > 10) limiter = 10;
     let sortedWeatherValues;
     switch (this.currWeather) {
       case "sunny":
@@ -371,12 +386,14 @@ import changeToFahrenheit from "./export.js";
       this.displayCityCards(sortedWeatherValues);
     }
   }
+
   /**
    * function to define the content of the weather cards based on the
    *  weather attributes and display top attributes selected by the user
    * @param {*String} weather holds the value of currently
    * selected weather like sunny,snow, rainny
    */
+
   setWeathercard(weather) {
     this.currWeather = weather;
     var cityValues = Object.values(this.weatherData);
@@ -391,14 +408,19 @@ import changeToFahrenheit from "./export.js";
       document.getElementById("sunny").style.borderBottom = "2px solid #1E90FF";
       //Get the cities with sunny weather using call function
       Array.prototype.forEach.call(cityValues, function (city) {
-        if (parseInt(city.temperature) > 29 &&
+        if (
+          parseInt(city.temperature) > 29 &&
           parseInt(city.humidity) < 50 &&
-          parseInt(city.precipitation) >= 50) {
+          parseInt(city.precipitation) >= 50
+        ) {
           sunnyWeather.push(city);
         }
       });
       // Sort the cities in descending order of temperature
-      this.sortedSunnyWeatherValues = this.sortCities(sunnyWeather, "temperature");
+      this.sortedSunnyWeatherValues = this.sortCities(
+        sunnyWeather,
+        "temperature"
+      );
       //Display the city details in cards
       this.filterCityCards();
     }
@@ -408,15 +430,20 @@ import changeToFahrenheit from "./export.js";
       document.getElementById("snowflake").style.borderBottom =
         "2px solid #1E90FF";
       for (let i = 0; i < cityValues.length; i++) {
-        if (parseInt(cityValues[i].temperature) >= 20 &&
+        if (
+          parseInt(cityValues[i].temperature) >= 20 &&
           parseInt(cityValues[i].temperature) < 28 &&
           parseInt(cityValues[i].humidity) > 50 &&
-          parseInt(cityValues[i].precipitation) < 50) {
+          parseInt(cityValues[i].precipitation) < 50
+        ) {
           snowWeather.push(cityValues[i]);
         }
       }
       // Sort the cities in descending order of temperature
-      this.sortedSnowWeatherValues = this.sortCities(snowWeather, "temperature");
+      this.sortedSnowWeatherValues = this.sortCities(
+        snowWeather,
+        "temperature"
+      );
       this.filterCityCards();
       //Display the city details in cards
     }
@@ -435,13 +462,16 @@ import changeToFahrenheit from "./export.js";
       this.filterCityCards();
     }
   }
+
   //Task 3
   setCityTimeZones(city) {
     return city.timeZone.split("/")[0];
   }
+
   /**
    * @desc Display the lower card and based on the user selected continent and temperature.
    */
+
   displayContinentCards() {
     let continentCard = ``;
     let cityTimeZones = this.allCities.map(this.setCityTimeZones);
@@ -467,9 +497,11 @@ import changeToFahrenheit from "./export.js";
     }
     document.querySelector(".bottom-grid").innerHTML = continentCard;
   }
+
   /**
    * @desc  this function is to sort the cities of continent in ascending or descending order based on the user preference
    */
+
   sortCitiesByContAndTemp() {
     this.allCities = Object.values(this.weatherData);
     if (this.continentOrder == 0) {
@@ -512,11 +544,3 @@ import changeToFahrenheit from "./export.js";
     this.displayContinentCards();
   }
 }
-
-
-
-
-
-
-
-
