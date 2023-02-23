@@ -1,9 +1,10 @@
-import changeToFarenheit from "./export.js";
+import changeToFahrenheit from "./export.js";
 
 /**
  * @desc function to fetch weather data from the json file and store in a
- * global variable.
+ * global variable and also gives the updated DropDown for selected city 
  */
+
 (function () {
   fetch("data.json")
     .then((data) => data.json())
@@ -26,6 +27,7 @@ import changeToFarenheit from "./export.js";
         document.querySelector("#inputdata").addEventListener("change", value.updateValidCityDetails.bind(value));
     });
 })(); //IIFE
+
 /**
  * 
  * @param {String} weatherData Constructor function for all global variables and event listeners
@@ -87,13 +89,11 @@ import changeToFarenheit from "./export.js";
       this.sortCitiesByContAndTemp();
     });
   }
-  /**
-   * @desc this function gives the updateDropDown for city selection
-   */
 
   /**
-   * @desc function to check whether user has entered vaild input city
+   * @descfunction to check whether user has entered vaild input city and update the details
    */
+
   WeatherTemplate.prototype.userSelectedCity = function () {
     this.selectedCity = document
       .querySelector("#inputdata")
@@ -111,13 +111,15 @@ import changeToFarenheit from "./export.js";
       this.updateInValidCityDetails();
     }
   };
-  /**git 
+
+  /**
    * @desc this function sets the null value for weather details when
    * invalid city is selected
    */
+
   WeatherTemplate.prototype.updateInValidCityDetails = function () {
     document.querySelector("#top-tempc").innerText = "-";
-    document.querySelector("#top-far").innerText = "-";
+    document.querySelector("#top-fahrenheit").innerText = "-";
     document.querySelector("#top-humidity").innerText = "-";
     document.querySelector("#top-precipitation").innerText = "-";
     document.querySelector("#top-date").innerText = "";
@@ -131,11 +133,13 @@ import changeToFarenheit from "./export.js";
       document.querySelector(`#temperature-${i + 1}`).innerText = "-";
     }
   };
+
   /**
    * @desc Based on the user selected city the various fields such as
    *  temperature,precipitation,humidity,live time,date and next
    * five hours temperature and climate icons we get updated.
    */
+
   WeatherTemplate.prototype.updateValidCityDetails = function () {
     var updateDropDown = document.querySelector("#inputdata").value.toLowerCase();
     let valid = false;
@@ -161,8 +165,8 @@ import changeToFarenheit from "./export.js";
       this.weatherData[updateDropDown].precipitation;
     //temperature F
     let tempInCelsius = parseInt(this.weatherData[updateDropDown].temperature);
-    let tempInFahrenheit = changeToFarenheit(tempInCelsius).toFixed(0) + " F";
-    document.getElementById("top-far").innerHTML = tempInFahrenheit;
+    let tempInFahrenheit = changeToFahrenheit(tempInCelsius).toFixed(0) + " F";
+    document.getElementById("top-fahrenheit").innerHTML = tempInFahrenheit;
     //Date and time
     let datetimeArr;
     datetimeArr = this.weatherData[updateDropDown].dateAndTime.split(",");
@@ -238,6 +242,7 @@ import changeToFarenheit from "./export.js";
  * @param {Srting} timeZone timeZone of the currently selected city
  * @returns current time
  */
+
 WeatherTemplate.prototype.getTime=function(timeZone){
   return new Date().toLocaleString("en-US", {
     timeZone: timeZone,
@@ -251,6 +256,7 @@ WeatherTemplate.prototype.getTime=function(timeZone){
  * @param {String} datetimeArr date of current selected city
  * @returns current date
  */
+
 WeatherTemplate.prototype.getDate=function(datetimeArr) {
   const monthArr = [
     "Jan",
@@ -378,6 +384,7 @@ WeatherTemplate.prototype.filterCityCards = function () {
  * @param {*String} weather holds the value of currently
  * selected weather like sunny,snow, rainny
  */
+
 WeatherTemplate.prototype.setWeathercard = function (weather) {
   this.currWeather = weather;
   var cityValues = Object.values(this.weatherData);
@@ -441,13 +448,19 @@ WeatherTemplate.prototype.setWeathercard = function (weather) {
   }
 }
 
+/**
+ * @desc this function will split the timezone,and map function is used to link.
+ */
+
 //Task 3
 WeatherTemplate.prototype.setCityTimeZones= function(city) {
   return city.timeZone.split("/")[0];
 }
+
 /**
  * @desc Display the lower card and based on the user selected continent and temperature.
  */
+
 WeatherTemplate.prototype.displayContinentCards = function () {
   let continentCard = ``;
   let cityTimeZones = this.allCities.map(this.setCityTimeZones);
@@ -473,9 +486,11 @@ WeatherTemplate.prototype.displayContinentCards = function () {
   }
   document.querySelector(".bottom-grid").innerHTML = continentCard;
 }
+
 /**
  * @desc  this function is to sort the cities of continent in ascending or descending order based on the user preference
  */
+
 WeatherTemplate.prototype.sortCitiesByContAndTemp= function() {
   this.allCities = Object.values(this.weatherData);
   if (this.continentOrder == 0) {
