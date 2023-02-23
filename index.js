@@ -5,8 +5,10 @@ import changeToFarenheit from "./export.js";
    * @desc function to fetch weather data from the json file and store in a
    * global variable.
    */
-  fetch("https://soliton.glitch.me/all-timezone-cities")
-    .then((data) => data.json())
+  fetch("http://localhost:3000/weatherData")
+    .then((data) => data.text())
+    .then((data) =>data.replace(/�/g,"°"))
+  .then((data) => JSON.parse(data))
     .then((result) => {
       let weatherData = {};
       for (let i of result) {
@@ -25,8 +27,8 @@ import changeToFarenheit from "./export.js";
       };
       value.updateDropDown();
       value.sortByContinent();
-      setInterval(value.filterCityCards.bind(value), 60000);
-      setInterval(value.updateValidCityDetails.bind(value), 60000);
+      setInterval(value.filterCityCards.bind(value), 1000);
+      setInterval(value.updateValidCityDetails.bind(value), 1000);
       value.setWeathercard("sunny");
       document
         .querySelector("#inputdata")
@@ -199,12 +201,12 @@ class WeatherTemplate {
       }
     }
     if (!valid) return;
-
+    
     let cityResponse = await fetch(
-      `https://soliton.glitch.me?city=${this.weatherData[updateDropDown].cityName}`
+      `/weatherDataCity=${this.weatherData[updateDropDown].cityName}`
     ).then((data) => data.json());
     let forecastJSON = await fetch(
-      "https://soliton.glitch.me/hourly-forecast",
+      "/nextFiveData",
       {
         method: "POST",
         headers: {
@@ -387,7 +389,8 @@ class WeatherTemplate {
    */
   filterCityCards() {
     let limiter = parseInt(document.querySelector("#displaynum").value);
-    if (limiter < 3) return;
+    if (limiter < 3) limiter=3;
+    if(limiter>10) limiter=10;
     let sortedWeatherValues;
     switch (this.currWeather) {
       case "sunny":
