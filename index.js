@@ -1,9 +1,11 @@
 import changeToFahrenheit from "./export.js";
+import changeToFahrenheit from "./export.js";
 
 /**
  * @desc function to fetch weather data from the json file and store in a
- * global variable and also gives the updated DropDown for selected city 
+ * global variable, and also gives the updateDropDown based on user preferences
  */
+
 
 (function () {
   fetch("data.json")
@@ -28,9 +30,10 @@ import changeToFahrenheit from "./export.js";
     });
 })(); //IIFE
 
+
 /**
  * 
- * @param {String} weatherData Constructor function for all global variables and event listeners
+ * @param {String} weatherData Class Constructor function for all global variables and event listeners
  */
   class WeatherTemplate {
   constructor(weatherData) {
@@ -90,12 +93,8 @@ import changeToFahrenheit from "./export.js";
       this.sortCitiesByContAndTemp();
     });
   }
-
-  /**
-     * @desc this function gives the updateDropDown for city selection
-     */
-  /**
-     * @desc function to check whether user has entered vaild input city
+  /** 
+     * @desc function to check whether user has entered vaild input city and update the details
      */
   userSelectedCity() {
     this.selectedCity = document
@@ -114,12 +113,13 @@ import changeToFahrenheit from "./export.js";
       this.updateInValidCityDetails();
     }
   }
-  /**git
+  /**
      * @desc this function sets the null value for weather details when
      * invalid city is selected
      */
   updateInValidCityDetails() {
     document.querySelector("#top-tempc").innerText = "-";
+    document.querySelector("#top-fahrenheit").innerText = "-";
     document.querySelector("#top-fahrenheit").innerText = "-";
     document.querySelector("#top-humidity").innerText = "-";
     document.querySelector("#top-precipitation").innerText = "-";
@@ -165,6 +165,8 @@ import changeToFahrenheit from "./export.js";
       this.weatherData[updateDropDown].precipitation;
     //temperature F
     let tempInCelsius = parseInt(this.weatherData[updateDropDown].temperature);
+    let tempInFahrenheit = changeToFahrenheit(tempInCelsius).toFixed(0) + " F";
+    document.getElementById("top-fahrenheit").innerHTML = tempInFahrenheit;
     let tempInFahrenheit = changeToFahrenheit(tempInCelsius).toFixed(0) + " F";
     document.getElementById("top-fahrenheit").innerHTML = tempInFahrenheit;
     //Date and time
