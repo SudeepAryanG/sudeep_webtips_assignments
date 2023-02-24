@@ -5,7 +5,7 @@ import changeToFarenheit from "./export.js";
    * @desc function to fetch weather data from the json file and store in a
    * global variable.
    */
-  fetch("http://localhost:3000/weatherData")
+  fetch("http://localhost:5000/weatherData")
     .then((data) => data.text())
     .then((data) =>data.replace(/�/g,"°"))
   .then((data) => JSON.parse(data))

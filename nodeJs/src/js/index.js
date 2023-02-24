@@ -27,8 +27,8 @@ import changeToFarenheit from "./export.js";
       };
       value.updateDropDown();
       value.sortByContinent();
-      setInterval(value.filterCityCards.bind(value), 1000);
-      setInterval(value.updateValidCityDetails.bind(value), 1000);
+      // setInterval(value.filterCityCards.bind(value), 1000);
+      // setInterval(value.updateValidCityDetails.bind(value), 1000);
       value.setWeathercard("sunny");
       document
         .querySelector("#inputdata")
@@ -79,11 +79,11 @@ class WeatherTemplate {
       if (this.continentOrder == 0) {
         this.continentOrder = 1;
         document.querySelector("#bottom-continent-arrow").src =
-          "HTML & CSS/General Images & Icons/arrowUp.svg";
+        "../assets/General_Images_&_Icons/arrowUp.svg"
       } else if (this.continentOrder == 1) {
         this.continentOrder = 0;
         document.querySelector("#bottom-continent-arrow").src =
-          "HTML & CSS/General Images & Icons/arrowDown.svg";
+          "../assets/General_Images_&_Icons/arrowDown.svg";
       }
       this.sortByContinent();
     });
@@ -91,11 +91,11 @@ class WeatherTemplate {
       if (this.temperatureOrder == 0) {
         this.temperatureOrder = 1;
         document.querySelector("#bottom-temp-arrow").src =
-          "HTML & CSS/General Images & Icons/arrowUp.svg";
+          "../assets/General_Images_&_Icons/arrowUp.svg";
       } else if (this.temperatureOrder == 1) {
         this.temperatureOrder = 0;
         document.querySelector("#bottom-temp-arrow").src =
-          "HTML & CSS/General Images & Icons/arrowDown.svg";
+          "../assets/General_Images_&_Icons/arrowDown.svg";
       }
       this.sortByContinent();
     });
@@ -161,7 +161,7 @@ class WeatherTemplate {
     //Image
     document.getElementById(
       "top-img"
-    ).src = `HTML & CSS/Icons for cities/${updateDropDown}.svg`;
+    ).src = `../assets/Icons_for_cities/${updateDropDown}.svg`;
     //temperature
     let temp = this.weatherData[updateDropDown].temperature;
     document.getElementById("top-tempc").innerHTML = temp;
@@ -260,19 +260,19 @@ class WeatherTemplate {
     for (let i = 0; i < 6; i++) {
       if (sixtemp[i] < 0) {
         document.querySelector(`#icon-${i + 1}`).src =
-          "HTML & CSS/Weather Icons/snowflakeIcon.svg";
+          "../assets/Weather_Icons/snowflakeIcon.svg";
       } else if (sixtemp[i] < 18 && sixtemp[i] > 0) {
         document.querySelector(`#icon-${i + 1}`).src =
-          "HTML & CSS/Weather Icons/rainyIcon.svg";
+          "../assets/Weather_Icons/rainyIcon.svg";
       } else if (sixtemp[i] >= 18 && sixtemp[i] <= 22) {
         document.querySelector(`#icon-${i + 1}`).src =
-          "HTML & CSS/Weather Icons/windyIcon.svg";
+          "../assets/Weather_Icons/windyIcon.svg";
       } else if (sixtemp[i] >= 23 && sixtemp[i] <= 29) {
         document.querySelector(`#icon-${i + 1}`).src =
-          "HTML & CSS/Weather Icons/cloudyIcon.svg";
+          "../assets/Weather_Icons/cloudyIcon.svg";
       } else if (sixtemp[i] > 29) {
         document.querySelector(`#icon-${i + 1}`).src =
-          "HTML & CSS/Weather Icons/sunnyIcon.svg";
+          "../assets/Weather_Icons/sunnyIcon.svg";
       }
     }
   }
@@ -355,7 +355,7 @@ class WeatherTemplate {
                 <div class="mid-item">
                     <div>${arr[i].cityName}</div>
                     <div class="mid-img">
-                    <img src="HTML & CSS/Weather Icons/${
+                    <img src="../assets/Weather_Icons/${
                       this.currWeather
                     }Icon.svg" alt="sunny" />
                     <span>${arr[i].temperature}</span>
@@ -366,19 +366,19 @@ class WeatherTemplate {
                 )}</div>
                 <div>
                     <img
-                    src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                    src="../assets/Weather_Icons/humidityIcon.svg"
                     alt="rainy"
                     />${arr[i].humidity}
                 </div>
                 <div>
-                    <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" 
+                    <img src="../assets/Weather_Icons/precipitationIcon.svg" 
                     />${arr[i].precipitation}
                 </div>
                 </div>`;
     }
     document.querySelector(".middle-block").innerHTML = card;
     document.querySelectorAll(".mid").forEach((element, i) => {
-      element.style.backgroundImage = `url('./HTML & CSS/Icons for cities/${arr[
+      element.style.backgroundImage = `url('./assets/Icons_for_cities/${arr[
         i
       ].cityName.toLowerCase()}.svg')`;
     });
@@ -510,7 +510,7 @@ class WeatherTemplate {
                     <p class="grid-text">
                     ${this.allCities[i].cityName}, ${hourAndMin[0]}:${hourAndMin[1]} ${noonNow}<span
                         ><img
-                        src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                        src="../assets/Weather_Icons/humidityIcon.svg"
                         alt="rainy"
                         />
                         ${this.allCities[i].humidity}</span
