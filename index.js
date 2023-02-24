@@ -1,12 +1,11 @@
-import changeToFahrenheit from "./export.js";
+import changeToFarenheit from "./export.js";
 
+(function () {
 /**
  * @desc function to fetch weather data from the json file and store in a
  * global variable, and also gives the updateDropDown based on user preferences
  */
-
-(function () {
-  fetch("data.json")
+  fetch("https://soliton.glitch.me/all-timezone-cities")
     .then((data) => data.json())
     .then((result) => {
       let weatherData = {};
@@ -25,7 +24,7 @@ import changeToFahrenheit from "./export.js";
         document.querySelector("#data_dropdown").innerHTML = option;
       };
       value.updateDropDown();
-      value.sortByContinent();
+      value.sortCitiesByContAndTemp();
       setInterval(value.filterCityCards.bind(value), 60000);
       setInterval(value.updateValidCityDetails.bind(value), 60000);
       value.setWeathercard("sunny");
@@ -35,20 +34,8 @@ import changeToFahrenheit from "./export.js";
     });
 })(); //IIFE
 /**
- *
  * @param {String} weatherData Constructor Class has used for all function and for all global variables and event listeners
  */
-class WeatherTemplate {
-  constructor(weatherData) {
-    this.weatherData = weatherData;
-    this.selectedCity = "Anadyr";
-    this.currWeather;
-    this.sortedSunnyWeatherValues = [];
-    this.sortedSnowWeatherValues = [];
-    this.sortedRainyWeatherValues = [];
-    this.allCities = Object.keys(this.weatherData);
-    this.continentOrder = 0;
-    this.temperatureOrder = 1;
 class WeatherTemplate {
   constructor(weatherData) {
     this.weatherData = weatherData;
@@ -95,7 +82,7 @@ class WeatherTemplate {
         document.querySelector("#bottom-continent-arrow").src =
           "HTML & CSS/General Images & Icons/arrowDown.svg";
       }
-      this.sortByContinent();
+      this.sortCitiesByContAndTemp();
     });
     document.querySelector("#bottom-temp").addEventListener("click", () => {
       if (this.temperatureOrder == 0) {
@@ -107,14 +94,11 @@ class WeatherTemplate {
         document.querySelector("#bottom-temp-arrow").src =
           "HTML & CSS/General Images & Icons/arrowDown.svg";
       }
-      this.sortByContinent();
+      this.sortCitiesByContAndTemp();
     });
   }
   /**
-   * @desc this function gives the updateDropDown for city selection
-   */
-  /**
-   * @desc function to check whether user has entered vaild input city
+   * @desc function to check whether user has entered vaild input city and update the details
    */
   userSelectedCity() {
     this.selectedCity = document.querySelector("#inputdata").value;
@@ -137,7 +121,7 @@ class WeatherTemplate {
    */
   updateInValidCityDetails() {
     document.querySelector("#top-tempc").innerText = "-";
-    document.querySelector("#top-far").innerText = "-";
+    document.querySelector("#top-fahrenheit").innerText = "-";
     document.querySelector("#top-humidity").innerText = "-";
     document.querySelector("#top-precipitation").innerText = "-";
     document.querySelector("#top-date").innerText = "";
@@ -184,7 +168,7 @@ class WeatherTemplate {
     //temperature F
     let cel = parseInt(this.weatherData[updateDropDown].temperature);
     let far = changeToFarenheit(cel).toFixed(0) + " F";
-    document.getElementById("top-far").innerHTML = far;
+    document.getElementById("top-fahrenheit").innerHTML = far;
     //Date and time
     let datetimeArr;
     datetimeArr = this.weatherData[updateDropDown].dateAndTime.split(",");
@@ -196,8 +180,6 @@ class WeatherTemplate {
     document.getElementById("top-date").innerHTML = currDate;
     // Time
     let time = document.querySelector("#top-time");
-    let timeZone = this.weatherData[`${updateDropDown}`].timeZone;
-    let currTime = this.getTime(timeZone);
     let timeZone = this.weatherData[`${updateDropDown}`].timeZone;
     let currTime = this.getTime(timeZone);
     time.innerHTML = currTime;
@@ -343,13 +325,9 @@ class WeatherTemplate {
         });
         break;
       case "precipitation":
-        break;
-      case "precipitation":
         arr.sort((a, b) => {
           return parseInt(b.precipitation) - parseInt(a.precipitation);
         });
-        break;
-      default:
         break;
       default:
         arr.sort((a, b) => {
@@ -360,10 +338,12 @@ class WeatherTemplate {
     return arr;
   }
   //Display Middle Cards
+
   /**
    * @desc function to display cards containing sorted cities  as per user preferences
    * @param {*} arr all cities data in string format.
    */
+
   displayCityCards(arr) {
     let card = "";
     for (let i = 0; i < arr.length; i++) {
@@ -399,10 +379,12 @@ class WeatherTemplate {
       ].cityName.toLowerCase()}.svg')`;
     });
   }
+  
   /**
    * @desc function to manage the numberof cities cards displayed based on
    * display top like minimumand maximum numbers.
    */
+
   filterCityCards() {
     let limiter = parseInt(document.querySelector("#displaynum").value);
     if (limiter < 3) return;
@@ -431,12 +413,14 @@ class WeatherTemplate {
       this.displayCityCards(sortedWeatherValues);
     }
   }
+
   /**
-   * function to define the content of the weather cards based on the
+   * @desc function to define the content of the weather cards based on the
    *  weather attributes and display top attributes selected by the user
    * @param {*String} weather holds the value of currently
    * selected weather like sunny,snow, rainny
    */
+
   setWeathercard(weather) {
     this.currWeather = weather;
     var cityValues = Object.values(this.weatherData);
@@ -503,14 +487,15 @@ class WeatherTemplate {
       this.filterCityCards();
     }
   }
-  }
 
   setCityTimeZones(city) {
     return city.timeZone.split("/")[0];
   }
+
   /**
-   * @desc Display the lower card and based on the user selected continent and temperature.
+   * @desc Display the continent card and based on the user selected continent and temperature.
    */
+
   displayContinentCards() {
     let continentCard = ``;
     let cityTimeZones = this.allCities.map(this.setCityTimeZones);
@@ -536,10 +521,12 @@ class WeatherTemplate {
     }
     document.querySelector(".bottom-grid").innerHTML = continentCard;
   }
+
   /**
    * @desc this function Sort the Continent based on asscending or decending orders based on the user preference.
    */
-  sortByContinent() {
+
+  sortCitiesByContAndTemp() {
     this.allCities = Object.values(this.weatherData);
     if (this.continentOrder == 0) {
       if (this.temperatureOrder == 0) {
