@@ -91,7 +91,7 @@ class WeatherTemplate {
       this.sortCitiesByContAndTemp();
     });
   }
-  
+
   /**
    * @desc function to check whether user has entered vaild input city and update the details
    */
@@ -121,7 +121,7 @@ class WeatherTemplate {
 
   updateInValidCityDetails() {
     document.querySelector("#top-tempc").innerText = "-";
-    document.querySelector("#top-fahrenheit").innerText = "-"; 
+    document.querySelector("#top-fahrenheit").innerText = "-";
     document.querySelector("#top-humidity").innerText = "-";
     document.querySelector("#top-precipitation").innerText = "-";
     document.querySelector("#top-date").innerText = "";
@@ -388,7 +388,7 @@ class WeatherTemplate {
   }
 
   /**
-   * function to define the content of the weather cards based on the
+   * @desc function to define the content of the weather cards based on the
    *  weather attributes and display top attributes selected by the user
    * @param {*String} weather holds the value of currently
    * selected weather like sunny,snow, rainny
@@ -469,7 +469,7 @@ class WeatherTemplate {
   }
 
   /**
-   * @desc Display the lower card and based on the user selected continent and temperature.
+   * @desc  Display the continent card and based on the user selected continent and temperature.
    */
 
   displayContinentCards() {
