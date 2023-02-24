@@ -2,10 +2,10 @@ import changeToFarenheit from "./export.js";
 
 (function () {
   /**
-   * @desc function to fetch weather data from the json file and store in a
-   * global variable.
+  * @desc function to fetch weather data from the json file and store in a
+  *global variable, and also gives the updateDropDown based on user preferences
    */
-  fetch("http://localhost:3000/weatherData")
+  fetch("http://localhost:8080/weatherData")
     .then((data) => data.text())
     .then((data) =>data.replace(/�/g,"°"))
   .then((data) => JSON.parse(data))
@@ -26,9 +26,9 @@ import changeToFarenheit from "./export.js";
         document.querySelector("#data_dropdown").innerHTML = option;
       };
       value.updateDropDown();
-      value.sortByContinent();
-      // setInterval(value.filterCityCards.bind(value), 1000);
-      // setInterval(value.updateValidCityDetails.bind(value), 1000);
+      value.sortCitiesByContAndTemp();
+      setInterval(value.filterCityCards.bind(value), 60000);
+      setInterval(value.updateValidCityDetails.bind(value), 60000);
       value.setWeathercard("sunny");
       document
         .querySelector("#inputdata")
@@ -85,7 +85,7 @@ class WeatherTemplate {
         document.querySelector("#bottom-continent-arrow").src =
           "../assets/General_Images_&_Icons/arrowDown.svg";
       }
-      this.sortByContinent();
+      this.sortCitiesByContAndTemp();
     });
     document.querySelector("#bottom-temp").addEventListener("click", () => {
       if (this.temperatureOrder == 0) {
@@ -97,14 +97,12 @@ class WeatherTemplate {
         document.querySelector("#bottom-temp-arrow").src =
           "../assets/General_Images_&_Icons/arrowDown.svg";
       }
-      this.sortByContinent();
+      this.sortCitiesByContAndTemp();
     });
   }
+
   /**
-   * @desc this function gives the updateDropDown for city selection
-   */
-  /**
-   * @desc function to check whether user has entered vaild input city
+   * @desc function to check whether user has entered vaild input city and update the details
    */
   userSelectedCity() {
     this.selectedCity = document.querySelector("#inputdata").value;
@@ -203,7 +201,7 @@ class WeatherTemplate {
     if (!valid) return;
     
     let cityResponse = await fetch(
-      `/weatherDataCity=${this.weatherData[updateDropDown].cityName}`
+      `/weatherDataCity/${this.weatherData[updateDropDown].cityName}`
     ).then((data) => data.json());
     let forecastJSON = await fetch(
       "/nextFiveData",
@@ -523,7 +521,7 @@ class WeatherTemplate {
   /**
    * @desc this function Sort the Continent based on asscending or decending orders based on the user preference.
    */
-  sortByContinent() {
+  sortCitiesByContAndTemp() {
     this.allCities = Object.values(this.weatherData);
     if (this.continentOrder == 0) {
       if (this.temperatureOrder == 0) {

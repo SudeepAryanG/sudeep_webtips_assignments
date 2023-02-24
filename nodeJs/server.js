@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 8080
 const path = require('path')
 let currCityDetails;
 
@@ -17,7 +17,7 @@ app.get("/weatherData",(req,res)=>{
 })
 
 app.get("/weatherDataCity/:id",(req,res)=>{
-  currCityDetails=timeForOneCity(req.params.city);
+  currCityDetails=timeForOneCity(req.params.id);
   res.json(currCityDetails);
 })
 
