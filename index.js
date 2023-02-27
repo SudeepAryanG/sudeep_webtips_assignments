@@ -1,37 +1,42 @@
 import changeToFahrenheit from "./export.js";
-
+  
 /**
  * @desc function to fetch weather data from the json file and store in a
  * global variable, and also gives the updateDropDown based on user preferences
  */
 
 (function () {
-  fetch("data.json")
+  fetch("https://soliton.glitch.me/all-timezone-cities")
     .then((data) => data.json())
     .then((result) => {
-      let value = new WeatherTemplate(result);
+      let weatherData = {};
+      for (let cityDetails of result) {
+        weatherData[cityDetails.cityName.toLowerCase()] = cityDetails;
+      }
+      let value = new WeatherTemplate(weatherData);
       value.__proto__.updateDropDown = function () {
-        var city = Object.keys(this.weatherData);
+        var city = Object.keys(weatherData);
         var option = ``;
         for (let i = 0; i < city.length; i++) {
-          option += `<option>${this.weatherData[city[i]].cityName}</option>`;
+          option += `<option>${
+            city[i].charAt(0).toUpperCase() + city[i].slice(1)
+          }</option>`;
         }
         document.querySelector("#data_dropdown").innerHTML = option;
       };
       value.updateDropDown();
       value.sortCitiesByContAndTemp();
-      setInterval(value.filterCityCards.bind(value), 1000);
-      setInterval(value.updateValidCityDetails.bind(value), 1000);
+      setInterval(value.filterCityCards.bind(value), 60000);
+      setInterval(value.updateValidCityDetails.bind(value), 60000);
       value.setWeathercard("sunny");
       document
         .querySelector("#inputdata")
-        .addEventListener("change", value.updateValidCityDetails.bind(value));
+        .addEventListener("input", value.updateValidCityDetails.bind(value));
     });
 })(); //IIFE
 
 /**
- *
- * @param {String} weatherData Class Constructor function for all global variables and event listeners
+ * @param {String} weatherData Constructor Class has used for all function and for all global variables and event listeners
  */
 class WeatherTemplate {
   constructor(weatherData) {
@@ -48,6 +53,9 @@ class WeatherTemplate {
     document
       .querySelector("#inputdata")
       .addEventListener("input", this.userSelectedCity.bind(this));
+    document
+      .querySelector("#inputdata")
+      .addEventListener("input", this.nextFiveHrs.bind(this));
     document
       .querySelector("#sunny")
       .addEventListener("click", this.setWeathercard.bind(this, "sunny"));
@@ -97,19 +105,17 @@ class WeatherTemplate {
    */
 
   userSelectedCity() {
-    this.selectedCity = document
-      .querySelector("#inputdata")
-      .value.toLowerCase();
+    this.selectedCity = document.querySelector("#inputdata").value;
     let city = Object.keys(this.weatherData);
     let currentCity = this.selectedCity;
     let flag = 0;
     for (let i = 0; i < city.length; i++) {
-      if (currentCity == city[i]) {
+      if (currentCity.toLowerCase() === city[i].toLowerCase()) {
         this.updateValidCityDetails();
         flag = 1;
       }
     }
-    if (flag == 0) {
+    if (flag === 0) {
       this.updateInValidCityDetails();
     }
   }
@@ -143,7 +149,7 @@ class WeatherTemplate {
    */
 
   updateValidCityDetails() {
-    var updateDropDown = document
+    let updateDropDown = document
       .querySelector("#inputdata")
       .value.toLowerCase();
     let valid = false;
@@ -159,7 +165,7 @@ class WeatherTemplate {
       "top-img"
     ).src = `HTML & CSS/Icons for cities/${updateDropDown}.svg`;
     //temperature
-    var temp = this.weatherData[updateDropDown].temperature;
+    let temp = this.weatherData[updateDropDown].temperature;
     document.getElementById("top-tempc").innerHTML = temp;
     //humidity
     document.getElementById("top-humidity").innerHTML =
@@ -185,9 +191,43 @@ class WeatherTemplate {
     let timeZone = this.weatherData[`${updateDropDown}`].timeZone;
     let currTime = this.getTime(timeZone);
     time.innerHTML = currTime;
+  }
+  async nextFiveHrs() {
+    let updateDropDown = document
+      .querySelector("#inputdata")
+      .value.toLowerCase();
+    let valid = false;
+    for (const city of Object.keys(this.weatherData)) {
+      if (city == updateDropDown) {
+        valid = true;
+      }
+    }
+    if (!valid) return;
+
+    let cityResponse = await fetch(
+      `https://soliton.glitch.me?city=${this.weatherData[updateDropDown].cityName}`
+    ).then((data) => data.json());
+    let forecastJSON = await fetch(
+      "https://soliton.glitch.me/hourly-forecast",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...cityResponse,
+          hours: "6",
+        }),
+      }
+    ).then((data) => data.json());
+    let timeZone = this.weatherData[`${updateDropDown}`].timeZone;
+    let currTime = this.getTime(timeZone);
+
     //Hours changing with wrt to time.
     let hour = parseInt(currTime.split(":")[0]);
     let noon = currTime.slice(-2);
+    //let noon = currTime.split(" ")[1];
     for (let i = 0; i < 6; i++) {
       if (hour > 12) {
         hour = hour - 12;
@@ -213,9 +253,7 @@ class WeatherTemplate {
       parseInt(this.weatherData[`${updateDropDown}`].temperature.slice(0, -2)),
     ];
     for (let i = 0; i < 4; i++) {
-      sixtemp[i + 2] = parseInt(
-        this.weatherData[`${updateDropDown}`].nextFiveHrs[i].slice(0, -2)
-      );
+      sixtemp[i + 2] = parseInt(forecastJSON.temperature[i].slice(0, -2));
     }
     for (let i = 0; i < 6; i++) {
       document.querySelector(`#temperature-${i + 1}`).innerHTML = sixtemp[i];
@@ -242,10 +280,11 @@ class WeatherTemplate {
   }
 
   /**
-   * @desc this function sets the current time for the specified timezone
-   * @param {Srting} timeZone timeZone of the currently selected city
+   * @desc this prototype function sets the current time for the specified timezone
+   * @param {*} timeZone timeZone of the currently selected city
    * @returns current time
    */
+
   getTime(timeZone) {
     return new Date().toLocaleString("en-US", {
       timeZone: timeZone,
@@ -259,6 +298,7 @@ class WeatherTemplate {
    * @param {String} datetimeArr date of current selected city
    * @returns current date
    */
+
   getDate(datetimeArr) {
     const monthArr = [
       "Jan",
@@ -281,14 +321,13 @@ class WeatherTemplate {
     return dateInWords;
   }
 
-  //Task2
   /**
    * @desc function to sort cities based on sunny rainy or cold option choosen by the user
    * @param {@String} arr all values of cities data.
    * @param {*String} constraint type of weather like suuny,cold,rainy
    * @returns returns the sorted city array.
    */
-
+  
   sortCities(arr, constraint) {
     switch (constraint) {
       case "temperature":
@@ -311,6 +350,7 @@ class WeatherTemplate {
   }
 
   //Display Middle Cards
+
   /**
    * @desc function to display cards containing sorted cities  as per user preferences
    * @param {*} arr all cities data in string format.
@@ -320,29 +360,29 @@ class WeatherTemplate {
     let card = "";
     for (let i = 0; i < arr.length; i++) {
       card += `<div class="mid">
-              <div class="mid-item">
-                <div>${arr[i].cityName}</div>
-                <div class="mid-img">
-                  <img src="HTML & CSS/Weather Icons/${
-                    this.currWeather
-                  }Icon.svg" alt="sunny" />
-                  <span>${arr[i].temperature}</span>
+                <div class="mid-item">
+                    <div>${arr[i].cityName}</div>
+                    <div class="mid-img">
+                    <img src="HTML & CSS/Weather Icons/${
+                      this.currWeather
+                    }Icon.svg" alt="sunny" />
+                    <span>${arr[i].temperature}</span>
+                    </div>
                 </div>
-              </div>
-              <div class="city-card-time">${this.getTime(
-                arr[i]["timeZone"]
-              )}</div>
-              <div>
-                <img
-                  src="HTML & CSS/Weather Icons/humidityIcon.svg"
-                  alt="rainy"
-                />${arr[i].humidity}
-              </div>
-              <div>
-                <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" 
-                />${arr[i].precipitation}
-              </div>
-            </div>`;
+                <div class="city-card-time">${this.getTime(
+                  arr[i]["timeZone"]
+                )}</div>
+                <div>
+                    <img
+                    src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                    alt="rainy"
+                    />${arr[i].humidity}
+                </div>
+                <div>
+                    <img src="HTML & CSS/Weather Icons/precipitationIcon.svg" 
+                    />${arr[i].precipitation}
+                </div>
+                </div>`;
     }
     document.querySelector(".middle-block").innerHTML = card;
     document.querySelectorAll(".mid").forEach((element, i) => {
@@ -351,7 +391,7 @@ class WeatherTemplate {
       ].cityName.toLowerCase()}.svg')`;
     });
   }
-
+  
   /**
    * @desc function to manage the numberof cities cards displayed based on
    * display top like minimumand maximum numbers.
@@ -359,8 +399,7 @@ class WeatherTemplate {
 
   filterCityCards() {
     let limiter = parseInt(document.querySelector("#displaynum").value);
-    if (limiter < 3) limiter = 3;
-    if (limiter > 10) limiter = 10;
+    if (limiter < 3) return;
     let sortedWeatherValues;
     switch (this.currWeather) {
       case "sunny":
@@ -416,7 +455,6 @@ class WeatherTemplate {
           sunnyWeather.push(city);
         }
       });
-      // Sort the cities in descending order of temperature
       this.sortedSunnyWeatherValues = this.sortCities(
         sunnyWeather,
         "temperature"
@@ -424,7 +462,6 @@ class WeatherTemplate {
       //Display the city details in cards
       this.filterCityCards();
     }
-    //SNOW Weather
     if (weather == "snowflake") {
       //Get the cities with snow weather
       document.getElementById("snowflake").style.borderBottom =
@@ -463,43 +500,46 @@ class WeatherTemplate {
     }
   }
 
-  //Task 3
+  /**
+   * @desc this functions is used to split the timeZone by /.
+   */
+
   setCityTimeZones(city) {
     return city.timeZone.split("/")[0];
   }
 
   /**
-   * @desc  Display the continent card and based on the user selected continent and temperature.
+   * @desc Display the continent card and based on the user selected continent and temperature.
    */
 
   displayContinentCards() {
     let continentCard = ``;
     let cityTimeZones = this.allCities.map(this.setCityTimeZones);
     for (let i = 0; i < 12; i++) {
-      let currentTime = this.getTime(this.allCities[i]["timeZone"]);
-      let currentSession = currentTime.slice(-2);
-      let hourAndMin = currentTime.split(":");
+      let currentTime  = this.getTime(this.allCities[i]["timeZone"]);
+      let currentSession  = currentTime .slice(-2);
+      let hourAndMin = currentTime .split(":");
       continentCard += `<div class="grid-item">
-              <div class="grid-text">
-                <p class="country-names">${cityTimeZones[i]}</p>
-                <span class="btm-temp">${this.allCities[i].temperature}</span>
-              </div>
-              <p class="grid-text">
-              ${this.allCities[i].cityName}, ${hourAndMin[0]}:${hourAndMin[1]} ${currentSession}<span
-                  ><img
-                    src="HTML & CSS/Weather Icons/humidityIcon.svg"
-                    alt="rainy"
-                  />
-                  ${this.allCities[i].humidity}</span
-                >
-              </p>
-        </div>`;
+                    <div class="grid-text">
+                    <p class="country-names">${cityTimeZones[i]}</p>
+                    <span class="btm-temp">${this.allCities[i].temperature}</span>
+                    </div>
+                    <p class="grid-text">
+                    ${this.allCities[i].cityName}, ${hourAndMin[0]}:${hourAndMin[1]} ${currentSession }<span
+                        ><img
+                        src="HTML & CSS/Weather Icons/humidityIcon.svg"
+                        alt="rainy"
+                        />
+                        ${this.allCities[i].humidity}</span
+                    >
+                    </p>
+            </div>`;
     }
     document.querySelector(".bottom-grid").innerHTML = continentCard;
   }
 
   /**
-   * @desc  this function is to sort the cities of continent in ascending or descending order based on the user preference
+   * @desc this function Sort the Continent based on asscending or decending orders based on the user preference.
    */
 
   sortCitiesByContAndTemp() {

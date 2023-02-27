@@ -1,8 +1,8 @@
-/**Changes to celiuses to farenheit
+/**Changes to celiuses to fahrenheit
  * @param {*Number} val  containes the celiuses value 
- * @returns farenheit value.
+ * @returns fahrenheit value.
  */
 export default function changeToFahrenheit(val) {
-    let farenheit = val * 1.8 + 32;
-    return farenheit;
+    let fahrenheit = val * 1.8 + 32;
+    return fahrenheit;
 }
