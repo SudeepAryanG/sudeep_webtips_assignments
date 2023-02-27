@@ -1,10 +1,12 @@
 import changeToFahrenheit  from "./export.js";
 
 (function () {
+
   /**
    * @desc function to fetch weather data from the json file and store in a
    *global variable, and also gives the updateDropDown based on user preferences
    */
+
   fetch("http://localhost:8080/weatherData")
     .then((data) => data.text())
     .then((data) => data.replace(/�/g, "°"))
@@ -35,8 +37,8 @@ import changeToFahrenheit  from "./export.js";
         .addEventListener("input", value.updateValidCityDetails.bind(value));
     });
 })(); //IIFE
+
 /**
- *
  * @param {String} weatherData Constructor Class has used for all function and for all global variables and event listeners
  */
 class WeatherTemplate {
@@ -175,9 +177,9 @@ class WeatherTemplate {
     document.getElementById("top-precipitation").innerHTML =
       this.weatherData[updateDropDown].precipitation;
     //temperature F
-    let cel = parseInt(this.weatherData[updateDropDown].temperature);
-    let far = changeToFahrenheit (cel).toFixed(0) + " F";
-    document.getElementById("top-fahrenheit").innerHTML = far;
+    let celsius = parseInt(this.weatherData[updateDropDown].temperature);
+    let fahrenheit = changeToFahrenheit (celsius).toFixed(0) + " F";
+    document.getElementById("top-fahrenheit").innerHTML = fahrenheit;
     //Date and time
     let datetimeArr;
     datetimeArr = this.weatherData[updateDropDown].dateAndTime.split(",");
@@ -499,7 +501,6 @@ class WeatherTemplate {
   }
 
   /**
-   * 
    * @param {String} city this function will split the city timeZone by /. 
    * @returns 
    */
