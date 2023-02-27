@@ -2,13 +2,13 @@ import changeToFarenheit from "./export.js";
 
 (function () {
   /**
-  * @desc function to fetch weather data from the json file and store in a
-  *global variable, and also gives the updateDropDown based on user preferences
+   * @desc function to fetch weather data from the json file and store in a
+   *global variable, and also gives the updateDropDown based on user preferences
    */
   fetch("http://localhost:8080/weatherData")
     .then((data) => data.text())
-    .then((data) =>data.replace(/�/g,"°"))
-  .then((data) => JSON.parse(data))
+    .then((data) => data.replace(/�/g, "°"))
+    .then((data) => JSON.parse(data))
     .then((result) => {
       let weatherData = {};
       for (let i of result) {
@@ -27,8 +27,8 @@ import changeToFarenheit from "./export.js";
       };
       value.updateDropDown();
       value.sortCitiesByContAndTemp();
-      setInterval(value.filterCityCards.bind(value), 60000);
-      setInterval(value.updateValidCityDetails.bind(value), 60000);
+      setInterval(value.filterCityCards.bind(value), 1000);
+      setInterval(value.updateValidCityDetails.bind(value), 1000);
       value.setWeathercard("sunny");
       document
         .querySelector("#inputdata")
@@ -79,7 +79,7 @@ class WeatherTemplate {
       if (this.continentOrder == 0) {
         this.continentOrder = 1;
         document.querySelector("#bottom-continent-arrow").src =
-        "../assets/General_Images_&_Icons/arrowUp.svg"
+          "../assets/General_Images_&_Icons/arrowUp.svg";
       } else if (this.continentOrder == 1) {
         this.continentOrder = 0;
         document.querySelector("#bottom-continent-arrow").src =
@@ -199,24 +199,21 @@ class WeatherTemplate {
       }
     }
     if (!valid) return;
-    
+
     let cityResponse = await fetch(
       `/weatherDataCity/${this.weatherData[updateDropDown].cityName}`
     ).then((data) => data.json());
-    let forecastJSON = await fetch(
-      "/nextFiveData",
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...cityResponse,
-          hours: "6",
-        }),
-      }
-    ).then((data) => data.json());
+    let forecastJSON = await fetch("/nextFiveData", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...cityResponse,
+        hours: "6",
+      }),
+    }).then((data) => data.json());
     let timeZone = this.weatherData[`${updateDropDown}`].timeZone;
     let currTime = this.getTime(timeZone);
 
@@ -387,8 +384,8 @@ class WeatherTemplate {
    */
   filterCityCards() {
     let limiter = parseInt(document.querySelector("#displaynum").value);
-    if (limiter < 3) limiter=3;
-    if(limiter>10) limiter=10;
+    if (limiter < 3) limiter = 3;
+    if (limiter > 10) limiter = 10;
     let sortedWeatherValues;
     switch (this.currWeather) {
       case "sunny":
