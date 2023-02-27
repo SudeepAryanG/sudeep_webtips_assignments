@@ -2,33 +2,28 @@ const express = require("express");
 const app = express();
 const port = 8080;
 const path = require("path");
-let currCityDetails;
+
+const {fork} = require("child_process") 
 
 app.use(express.static(path.join(__dirname, "src")));
 app.use(express.json());
 
-var weatherResult;
-
-const {
-  allTimeZones,
-  timeForOneCity,
-  nextNhoursWeather,
-} = require("./timeZone.js");
-
 app.get("/weatherData", (req, res) => {
-  weatherResult = allTimeZones();
-  res.json(weatherResult);
+  const childProcess = fork('./weatherData.js');
+  childProcess.send("message");
+  childProcess.on("message",message => res.json(message))
 });
 
 app.get("/weatherDataCity/:id", (req, res) => {
-  currCityDetails = timeForOneCity(req.params.id);
-  res.json(currCityDetails);
+  const childProcess = fork('./weatherDataCity.js');
+  childProcess.send({"city": req.params.id});
+  childProcess.on("message",message => res.json(message))
 });
 
 app.post("/nextFiveData", (req, res) => {
-  let cityDTN = req.body.city_Date_Time_Name;
-  let hours = req.body.hours;
-  res.json(nextNhoursWeather(cityDTN, hours, allTimeZones()));
+  const childProcess = fork('./nextFiveData.js'); 
+  childProcess.send({city: req.body.city_Date_Time_Name, hours: req.body.hours});
+  childProcess.on("message",message => res.json(message))
 });
 
 app.listen(port, () => {
