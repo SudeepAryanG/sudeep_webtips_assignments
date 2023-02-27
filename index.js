@@ -1,12 +1,11 @@
 import changeToFahrenheit from "./export.js";
-
-(function () {
   
 /**
  * @desc function to fetch weather data from the json file and store in a
  * global variable, and also gives the updateDropDown based on user preferences
  */
 
+(function () {
   fetch("https://soliton.glitch.me/all-timezone-cities")
     .then((data) => data.json())
     .then((result) => {
@@ -517,16 +516,16 @@ class WeatherTemplate {
     let continentCard = ``;
     let cityTimeZones = this.allCities.map(this.setCityTimeZones);
     for (let i = 0; i < 12; i++) {
-      let timeNow = this.getTime(this.allCities[i]["timeZone"]);
-      let noonNow = timeNow.slice(-2);
-      let hourAndMin = timeNow.split(":");
+      let currentTime  = this.getTime(this.allCities[i]["timeZone"]);
+      let currentSession  = currentTime .slice(-2);
+      let hourAndMin = currentTime .split(":");
       continentCard += `<div class="grid-item">
                     <div class="grid-text">
                     <p class="country-names">${cityTimeZones[i]}</p>
                     <span class="btm-temp">${this.allCities[i].temperature}</span>
                     </div>
                     <p class="grid-text">
-                    ${this.allCities[i].cityName}, ${hourAndMin[0]}:${hourAndMin[1]} ${noonNow}<span
+                    ${this.allCities[i].cityName}, ${hourAndMin[0]}:${hourAndMin[1]} ${currentSession }<span
                         ><img
                         src="HTML & CSS/Weather Icons/humidityIcon.svg"
                         alt="rainy"
