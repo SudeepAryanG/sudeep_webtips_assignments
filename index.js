@@ -1,16 +1,18 @@
-import changeToFarenheit from "./export.js";
+import changeToFahrenheit from "./export.js";
 
 (function () {
+  
 /**
  * @desc function to fetch weather data from the json file and store in a
  * global variable, and also gives the updateDropDown based on user preferences
  */
+
   fetch("https://soliton.glitch.me/all-timezone-cities")
     .then((data) => data.json())
     .then((result) => {
       let weatherData = {};
-      for (let i of result) {
-        weatherData[i.cityName.toLowerCase()] = i;
+      for (let cityDetails of result) {
+        weatherData[cityDetails.cityName.toLowerCase()] = cityDetails;
       }
       let value = new WeatherTemplate(weatherData);
       value.__proto__.updateDropDown = function () {
@@ -33,6 +35,7 @@ import changeToFarenheit from "./export.js";
         .addEventListener("input", value.updateValidCityDetails.bind(value));
     });
 })(); //IIFE
+
 /**
  * @param {String} weatherData Constructor Class has used for all function and for all global variables and event listeners
  */
@@ -97,9 +100,11 @@ class WeatherTemplate {
       this.sortCitiesByContAndTemp();
     });
   }
+
   /**
    * @desc function to check whether user has entered vaild input city and update the details
    */
+
   userSelectedCity() {
     this.selectedCity = document.querySelector("#inputdata").value;
     let city = Object.keys(this.weatherData);
@@ -115,10 +120,12 @@ class WeatherTemplate {
       this.updateInValidCityDetails();
     }
   }
+
   /**
    * @desc this function sets the null value for weather details when
    * invalid city is selected
    */
+
   updateInValidCityDetails() {
     document.querySelector("#top-tempc").innerText = "-";
     document.querySelector("#top-fahrenheit").innerText = "-";
@@ -135,11 +142,13 @@ class WeatherTemplate {
       document.querySelector(`#temperature-${i + 1}`).innerText = "-";
     }
   }
+
   /**
    * @desc Based on the user selected city the various fields such as
    *  temperature,precipitation,humidity,live time,date and next
    * five hours temperature and climate icons we get updated.
    */
+
   updateValidCityDetails() {
     let updateDropDown = document
       .querySelector("#inputdata")
@@ -166,9 +175,9 @@ class WeatherTemplate {
     document.getElementById("top-precipitation").innerHTML =
       this.weatherData[updateDropDown].precipitation;
     //temperature F
-    let cel = parseInt(this.weatherData[updateDropDown].temperature);
-    let far = changeToFarenheit(cel).toFixed(0) + " F";
-    document.getElementById("top-fahrenheit").innerHTML = far;
+    let tempInCelsius = parseInt(this.weatherData[updateDropDown].temperature);
+    let tempInFahrenheit = changeToFahrenheit(tempInCelsius).toFixed(0) + " F";
+    document.getElementById("top-fahrenheit").innerHTML = tempInFahrenheit;
     //Date and time
     let datetimeArr;
     datetimeArr = this.weatherData[updateDropDown].dateAndTime.split(",");
@@ -276,6 +285,7 @@ class WeatherTemplate {
    * @param {*} timeZone timeZone of the currently selected city
    * @returns current time
    */
+
   getTime(timeZone) {
     return new Date().toLocaleString("en-US", {
       timeZone: timeZone,
@@ -289,6 +299,7 @@ class WeatherTemplate {
    * @param {String} datetimeArr date of current selected city
    * @returns current date
    */
+
   getDate(datetimeArr) {
     const monthArr = [
       "Jan",
@@ -317,6 +328,7 @@ class WeatherTemplate {
    * @param {*String} constraint type of weather like suuny,cold,rainy
    * @returns returns the sorted city array.
    */
+  
   sortCities(arr, constraint) {
     switch (constraint) {
       case "temperature":
@@ -337,6 +349,7 @@ class WeatherTemplate {
     }
     return arr;
   }
+
   //Display Middle Cards
 
   /**
@@ -487,6 +500,10 @@ class WeatherTemplate {
       this.filterCityCards();
     }
   }
+
+  /**
+   * @desc this functions is used to split the timeZone by /.
+   */
 
   setCityTimeZones(city) {
     return city.timeZone.split("/")[0];
