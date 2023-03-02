@@ -3,7 +3,7 @@ import changeToFarenheit from "./export.js";
 (function () {
   /**
    * @desc function to fetch weather data from the json file and store in a
-   * global variable.
+   * global variable,and also based on user preference dropdown will get update.
    */
   fetch("http://localhost:3000/weatherData")
     .then((data) => data.text())
