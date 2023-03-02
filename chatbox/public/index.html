@@ -1,19 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <head>
+      <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat Box</title>
-    <link rel="stylesheet" href="index.css">
-</head>
-<body>
-    <div id="message-container"><center>Chat Box</center></div>
-    <form id="send-container">
-        <input type="text" id="message-input" />
-        <button type="submit" id="send-button" >Send</button>
-    </form>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div>
+      <div>
+        <h1><center>Chat Box</center></h1>
+      </div>
+      <div id="main-box">
+        <div id="message-container"></div>
+      </div>
+      <form id="send-container">
+        <input type="text" id="message-input" required />
+        <button class="btn btn-danger" type="submit" id="send-button">
+          Send
+        </button>
+      </form>
+    </div>
     <script src="http://localhost:8080/socket.io/socket.io.js"></script>
     <script src="index.js"></script>
-</body>
+  </body>
 </html>

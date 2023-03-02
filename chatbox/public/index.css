@@ -1,26 +1,37 @@
-body{
-    display: flex;
-    justify-content: center;
-    background-color: white;
+body {
+  display: flex;
+  justify-content: center;
+  /* background-image: url(chat-box.jpg); */
+  background-image: radial-gradient(skyblue, pink, rgb(235, 235, 149));
+  padding: 3%;
+  position: relative;
+  font-style: oblique;
+}
+#main-box {
+  height: 600px;
+  width: 500px;
+  overflow-y: scroll;
+  border: 2px solid black;
+  box-shadow: 20px 20px 20px rgb(53, 52, 52);
+}
+.heading {
+  text-align: center;
+  font-size: xx-large;
+  font-weight: bolder;
 }
 
-#message-container{
-    background-color: aquamarine;
-    width: 80%;
-    max-width: 1200px;
-    justify-content: center;
-    font-size:x-large;
-    font-weight: bolder;
+#message-container {
+  width: 80%;
+  max-width: 1200px;
+  justify-content: center;
+  font-size: x-large;
 }
-#message-input{
-    flex-grow:1;
+#message-input {
+  position: relative;
+  width: 440px;
 }
-#send-container{
-    position:fixed;
-    padding-bottom: 10%;
-    bottom: 0;
-    background-color: white;
-    max-width: 1200px;
-    width: 80%;
-    display: flex;
+#send-container {
+  flex-grow: 1;
+  display: flex;
+  position: absolute;
 }
