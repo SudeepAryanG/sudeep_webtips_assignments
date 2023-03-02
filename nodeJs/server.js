@@ -8,7 +8,9 @@ app.use(express.static(path.join(__dirname, "src")));
 app.use(express.json());
 
 var weatherResult;
-
+/**
+ * @desc using these timeZone.js we can able to fetch the required data 
+ */
 const {
   allTimeZones,
   timeForOneCity,
