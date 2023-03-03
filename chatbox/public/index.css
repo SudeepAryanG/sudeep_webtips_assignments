@@ -2,7 +2,11 @@ body {
   display: flex;
   justify-content: center;
   /* background-image: url(chat-box.jpg); */
-  background-image: radial-gradient(skyblue, pink, rgb(235, 235, 149));
+  /* background-image: #ffffff; */
+  background-image: url(social-media.jpg);
+  background-repeat:no-repeat;
+  height: auto  ;
+  background-size: cover;
   padding: 3%;
   position: relative;
   font-style: oblique;
@@ -12,6 +16,8 @@ body {
   width: 500px;
   overflow-y: scroll;
   border: 2px solid black;
+  /* background-image: radial-gradient(skyblue, pink, rgb(235, 235, 149)); */
+ 
   box-shadow: 20px 20px 20px rgb(53, 52, 52);
 }
 .heading {
