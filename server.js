@@ -70,37 +70,3 @@ var server=http.createServer(function(req, res) {
 server.listen(port,()=>{
     console.log(`listening on ${port}`);
 })
-
-
-
-// const express = require('express')
-// const app = express()
-// const port = 5000
-// const path = require('path')
-// app.use(express.static(path.join(__dirname,"src" ))) 
-// app.use(express.json());
-
-// var weatherResult;
-
-// const {allTimeZones,timeForOneCity,nextNhoursWeather} =require('./timeZone.js');
-
-// app.get("/weatherData",(req,res)=>{
-//   weatherResult=allTimeZones();
-//   res.json(weatherResult);
-// })
-
-// app.get("/weatherDataCity",(req,res)=>{
-//   console.log(req.params.id)
-//   // console.log(timeForOneCity(req.params.id));
-//   res.json(timeForOneCity(req.params.id));
-// })
-
-// app.post('/nextFiveData',(req,res)=>{
-//   let cityDTN=req.body.city_Date_Time_Name;
-//   let hours=req.body.hours;
-//   res.json=nextNhoursWeather(cityDTN,hours,weatherResult);
-// })
-
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`)
-// })
