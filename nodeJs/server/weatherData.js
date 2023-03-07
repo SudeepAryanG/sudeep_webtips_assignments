@@ -1,4 +1,4 @@
-const { allTimeZones } = require("../timeZone");
+const { allTimeZones } = require("sudeeparyan_timezone");
 
 process.on("message", (message) => {
   const jsonResponse = allTimeZones();

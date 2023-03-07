@@ -1,4 +1,4 @@
-const { timeForOneCity } = require("../timeZone");
+const { timeForOneCity } = require("sudeeparyan_timezone");
 
 process.on("message", (message) => {
   const jsonResponse = timeForOneCity(message.city);

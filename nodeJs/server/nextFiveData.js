@@ -1,4 +1,4 @@
-const { nextNhoursWeather, allTimeZones } = require("../timeZone");
+const { nextNhoursWeather, allTimeZones } = require("sudeeparyan_timezone");
 
 process.on("message", (message) => {
   const jsonResponse = nextNhoursWeather(
