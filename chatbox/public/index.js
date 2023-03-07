@@ -2,7 +2,21 @@ const socket = io("http://localhost:8080");
 const messageContainer = document.getElementById("message-container");
 const messageForm = document.getElementById("send-container");
 const messageInput = document.getElementById("message-input");
-
+let dark = false;
+function changeMode(){
+  var mybody = document.body;
+  // if body have class mydark it will remove the class else add
+  console.log(mybody);
+  mybody.classList.toggle("mydark"); 
+  dark =! dark; 
+  if(dark ==0){
+    document.querySelector("#checktext").innerHTML = 'Lightmode';
+  }  
+  else{
+    document.querySelector("#checktext").innerHTML = 'Darkmode';
+  }
+  
+}
 const name = prompt("What is your name");
 appendMessage(`<div class="init-message" >You joined</div>`);
 socket.emit("new-user", name);

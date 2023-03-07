@@ -1,19 +1,39 @@
 body {
   display: flex;
   justify-content: center;
-  background-image: url('21.jpg');
-  
-  /* background-image: radial-gradient(skyblue, pink, rgb(235, 235, 149)); */
+  background-color: white;
+  color:black;
+  /* background-image: linear-gradient(to bottom right, lightgreen, green); */
   background-repeat:no-repeat;
   background-size: cover;
   padding: 3%;
   position: relative;
   font-style: oblique;
+  transition: background 0.4s linear;
 }
-/* #container{
-  background-image: url(chat.jpg);
-  opacity: 0.3;
-} */
+#heading{
+  font-size:50px;
+  font-weight: bolder;
+}
+body.mydark {
+  background-color: #292c35;
+}
+.label{
+  transform: scale(1.5);
+}
+.mydark{
+  background-color: black;
+  color:white;
+}
+.custom-switch{
+  position: fixed; 
+  top:20px; 
+  left:20px; 
+}
+#darkmode{
+  width: 70px; 
+  height: 30px;
+}
 #main-box {
   height: 600px;
   width: 500px;
@@ -22,6 +42,11 @@ body {
   background-repeat:no-repeat;
   background-size: cover;
   box-shadow: 20px 20px 20px rgb(53, 52, 52);
+  padding: 5%;
+  background-image:url(img.png);
+  background-color: rgb(198, 247, 198);
+  border-radius: 25px;
+  color: black;
 }
 
 #main-box::-webkit-scrollbar {
@@ -67,11 +92,9 @@ body {
   font-weight: bolder;
 }
 .user-text-other{
-  color: white;
+  color: black;
   text-align: start;
   font-weight: bolder;
-  
-
 }
 .user-text-me{
   color: darkred;

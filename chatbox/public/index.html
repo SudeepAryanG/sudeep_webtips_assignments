@@ -17,9 +17,13 @@
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
+    <div class="custom-control custom-switch"  >
+      <input type="checkbox" class="custom-control-input" id="darkmode" onclick="changeMode()" checked>
+      <label id="checktext" class="custom-control-label" for="darkmode">LightMode</label>
+    </div>
     <div id="container">
-      <div>
-        <h1><center>Chat Box</center></h1>
+      <div id="heading">
+        <center>Chat Box</center>
       </div>
       <div id="main-box">
         <div id="message-container">
