@@ -2,7 +2,7 @@ const http=require('http');
 const fs=require('fs');
 const path=require('path');
 
-let port=3000;
+let port=5000;
 
 let currentCity;
 /**
@@ -68,5 +68,5 @@ var server=http.createServer(function(req, res) {
  * @desc Server listening to the assigned ports
  */
 server.listen(port,()=>{
-    console.log('Running server on port 3000');
+    console.log(`listening on ${port}`);
 })
