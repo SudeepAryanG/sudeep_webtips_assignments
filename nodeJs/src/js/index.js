@@ -1,10 +1,10 @@
 import changeToFahrenheit  from "./export.js";
-
-(function () {
   /**
    * @desc function to fetch weather data from the json file and store in a
    *global variable, and also gives the updateDropDown based on user preferences
    */
+
+(function () {
   fetch("http://localhost:8080/weatherData")
     .then((data) => data.text())
     .then((data) => data.replace(/�/g, "°"))
@@ -104,7 +104,6 @@ class WeatherTemplate {
   /**
    * @desc function to check whether user has entered vaild input city and update the details
    */
-
   userSelectedCity() {
     this.selectedCity = document.querySelector("#inputdata").value;
     let city = Object.keys(this.weatherData);
@@ -125,7 +124,6 @@ class WeatherTemplate {
    * @desc this function sets the null value for weather details when
    * invalid city is selected
    */
-
   updateInValidCityDetails() {
     document.querySelector("#top-tempc").innerText = "-";
     document.querySelector("#top-fahrenheit").innerText = "-";
@@ -148,7 +146,6 @@ class WeatherTemplate {
    *  temperature,precipitation,humidity,live time,date and next
    * five hours temperature and climate icons we get updated.
    */
-
   updateValidCityDetails() {
     let updateDropDown = document
       .querySelector("#inputdata")
@@ -282,7 +279,6 @@ class WeatherTemplate {
    * @param {*} timeZone timeZone of the currently selected city
    * @returns current time
    */
-
   getTime(timeZone) {
     return new Date().toLocaleString("en-US", {
       timeZone: timeZone,
@@ -296,7 +292,6 @@ class WeatherTemplate {
    * @param {String} datetimeArr date of current selected city
    * @returns current date
    */
-
   getDate(datetimeArr) {
     const monthArr = [
       "Jan",
@@ -325,7 +320,6 @@ class WeatherTemplate {
    * @param {*String} constraint type of weather like suuny,cold,rainy
    * @returns returns the sorted city array.
    */
-  
   sortCities(arr, constraint) {
     switch (constraint) {
       case "temperature":
@@ -352,7 +346,6 @@ class WeatherTemplate {
    * @desc function to display cards containing sorted cities  as per user preferences
    * @param {*} arr all cities data in string format.
    */
-
   displayCityCards(arr) {
     let card = "";
     for (let i = 0; i < arr.length; i++) {
@@ -393,7 +386,6 @@ class WeatherTemplate {
    * @desc function to manage the numberof cities cards displayed based on
    * display top like minimumand maximum numbers.
    */
-
   filterCityCards() {
     let limiter = parseInt(document.querySelector("#displaynum").value);
     if (limiter < 3) limiter = 3;
@@ -430,7 +422,6 @@ class WeatherTemplate {
    * @param {*String} weather holds the value of currently
    * selected weather like sunny,snow, rainny
    */
-
   setWeathercard(weather) {
     this.currWeather = weather;
     var cityValues = Object.values(this.weatherData);
@@ -498,6 +489,9 @@ class WeatherTemplate {
     }
   }
 
+  /**
+   * @desc this functions is used to split the timeZone by .
+   */
   setCityTimeZones(city) {
     return city.timeZone.split("/")[0];
   }
@@ -505,7 +499,6 @@ class WeatherTemplate {
   /**
    * @desc Display the lower card and based on the user selected continent and temperature.
    */
-
   displayContinentCards() {
     let continentCard = ``;
     let cityTimeZones = this.allCities.map(this.setCityTimeZones);
@@ -534,7 +527,6 @@ class WeatherTemplate {
   /**
    * @desc this function Sort the Continent based on asscending or decending orders based on the user preference.
    */
-  
   sortCitiesByContAndTemp() {
     this.allCities = Object.values(this.weatherData);
     if (this.continentOrder == 0) {
