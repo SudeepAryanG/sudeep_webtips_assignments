@@ -1,12 +1,9 @@
 import changeToFahrenheit  from "./export.js";
 
-(function () {
-
-  /**
+/**
    * @desc function to fetch weather data from the json file and store in a
    *global variable, and also gives the updateDropDown based on user preferences
    */
-
   fetch("http://localhost:8080/weatherData")
     .then((data) => data.text())
     .then((data) => data.replace(/�/g, "°"))
@@ -500,11 +497,6 @@ class WeatherTemplate {
     }
   }
 
-  /**
-   * @param {String} city this function will split the city timeZone by /. 
-   * @returns 
-   */
-
   setCityTimeZones(city) {
     return city.timeZone.split("/")[0];
   }
@@ -538,7 +530,6 @@ class WeatherTemplate {
     }
     document.querySelector(".bottom-grid").innerHTML = continentCard;
   }
-
   /**
    * @desc this function Sort the Continent based on asscending or decending orders based on the user preference.
    */
