@@ -1,6 +1,7 @@
 import changeToFahrenheit  from "./export.js";
 
-/**
+(function () {
+  /**
    * @desc function to fetch weather data from the json file and store in a
    *global variable, and also gives the updateDropDown based on user preferences
    */
