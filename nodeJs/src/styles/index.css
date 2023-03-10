@@ -7,6 +7,29 @@ body {
   overflow-x: scroll;
   overflow-y: scroll;
 }
+.chat-box{
+  position: fixed;
+  right: 2%;
+  bottom:2%;
+  margin-left: 1%;
+  border-radius: 5px;
+  animation-name: example;
+  animation-duration: 15s;
+  animation-iteration-count: infinite;
+  opacity: 0.8;
+  
+}
+.chat-box:hover {
+  transform: scale(1.2);
+}
+@keyframes example {
+  0%   {left:0px;}
+  25%  {left:90%;}
+  50%  { left:90%; }
+  75%  {left:0px; }
+  100% {left:0px; }
+}
+
 
 .top-container {
   display: grid;
@@ -157,7 +180,7 @@ body {
 }
 .middle-item {
   align-items: center;
-  background-color: rgb(34, 34, 34);
+  background-color: var(--primary-black);
   /* background-image: url("HTML & CSS/Icons for cities/newyork.svg"); */
   background-size: auto;
   height: 200px;
@@ -176,7 +199,7 @@ body {
   transform: scale(1.08);
 }
 .mid{
-  background-color: var(--primary-black);
+  background-color: #202228;
   background-image: url("../assets/Icons_for_cities/newyork.svg");
   background-position: right bottom;
   background-repeat: no-repeat;
@@ -188,6 +211,7 @@ body {
   min-width: 200px;
   padding: 1%;
   width: 20%;
+  border-radius: 15px;;
 }
 .mid-item {
   display: grid;

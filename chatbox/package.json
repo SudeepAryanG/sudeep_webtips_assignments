@@ -1,0 +1,18 @@
+{
+  "name": "chatbox",
+  "version": "1.0.0",
+  "description": "Chat Box",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Sudeep Aryan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20",
+    "socket.io": "^4.6.1",
+    "sudeeparyan_timezone": "^1.0.0"
+  }
+}

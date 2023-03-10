@@ -1,0 +1,103 @@
+body {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  color:black;
+  /* background-image: linear-gradient(to bottom right, lightgreen, green); */
+  background-repeat:no-repeat;
+  background-size: cover;
+  padding: 3%;
+  position: relative;
+  font-style: oblique;
+  transition: background 0.4s linear;
+}
+#heading{
+  font-size:50px;
+  font-weight: bolder;
+}
+body.mydark {
+  background-color: #292c35;
+}
+.label{
+  transform: scale(1.5);
+}
+.mydark{
+  background-color: black;
+  color:white;
+}
+.custom-switch{
+  position: fixed; 
+  top:20px; 
+  left:20px; 
+}
+#darkmode{
+  width: 70px; 
+  height: 30px;
+}
+#main-box {
+  height: 600px;
+  width: 500px;
+  overflow-y: scroll;
+  border: 6px solid black;
+  background-repeat:no-repeat;
+  background-size: cover;
+  box-shadow: 20px 20px 20px rgb(53, 52, 52);
+  padding: 5%;
+  background-image:url(img.png);
+  background-color: rgb(198, 247, 198);
+  border-radius: 25px;
+  color: black;
+}
+
+#main-box::-webkit-scrollbar {
+  display: none;
+}
+
+@media only screen and (max-height: 600px){
+  #main-box{
+    overflow-y: scroll;
+    display: block;
+  }
+}
+.heading {
+  text-align: center;
+  font-size: 200px;
+  font-weight: bolder;
+}
+
+#message-container {
+  width: 100%;
+  max-width: 1200px;
+  justify-content: center;
+  font-size: x-large;
+  display: flex;
+  flex-direction: column;
+}
+#message-input {
+  position: relative;
+  width: 440px;
+  background: white;
+  border: 1px solid white;
+}
+#send-container {
+  flex-grow: 1;
+  display: flex;
+  position: absolute;
+} 
+
+.init-message{
+  text-align: center;
+}
+.text-box{
+  font-weight: bolder;
+}
+.user-text-other{
+  color: black;
+  text-align: start;
+  font-weight: bolder;
+}
+.user-text-me{
+  color: darkred;
+  text-align:end;
+  font-weight: bolder;
+}
