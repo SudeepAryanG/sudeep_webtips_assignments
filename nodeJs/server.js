@@ -1,9 +1,6 @@
 const express = require("express");
 const app = express();
 const port = 8080;
-const path = require("path");
-const sudeep=require("sudeeparyan_timezone");
-// console.log(sudeep);
 //child process is used to run multiple servers at a time
 
 const { fork } = require("child_process");
