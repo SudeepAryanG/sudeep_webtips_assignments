@@ -1,9 +1,9 @@
-import changeToFarenheit from "./export.js";
-
-/**
+import changeToFahrenheit  from "./export.js";
+  /**
    * @desc function to fetch weather data from the json file and store in a
    *global variable, and also gives the updateDropDown based on user preferences
    */
+
 (function () {
   fetch("http://localhost:8080/weatherData")
     .then((data) => data.text())
@@ -11,8 +11,8 @@ import changeToFarenheit from "./export.js";
     .then((data) => JSON.parse(data))
     .then((result) => {
       let weatherData = {};
-      for (let i of result) {
-        weatherData[i.cityName.toLowerCase()] = i;
+      for (let cityDetails of result) {
+        weatherData[cityDetails.cityName.toLowerCase()] = cityDetails;
       }
       let value = new WeatherTemplate(weatherData);
       value.__proto__.updateDropDown = function () {
@@ -37,7 +37,6 @@ import changeToFarenheit from "./export.js";
 })(); //IIFE
 
 /**
- *
  * @param {String} weatherData Constructor Class has used for all function and for all global variables and event listeners
  */
 class WeatherTemplate {
@@ -127,7 +126,7 @@ class WeatherTemplate {
    */
   updateInValidCityDetails() {
     document.querySelector("#top-tempc").innerText = "-";
-    document.querySelector("#top-far").innerText = "-";
+    document.querySelector("#top-fahrenheit").innerText = "-";
     document.querySelector("#top-humidity").innerText = "-";
     document.querySelector("#top-precipitation").innerText = "-";
     document.querySelector("#top-date").innerText = "";
@@ -173,9 +172,9 @@ class WeatherTemplate {
     document.getElementById("top-precipitation").innerHTML =
       this.weatherData[updateDropDown].precipitation;
     //temperature F
-    let cel = parseInt(this.weatherData[updateDropDown].temperature);
-    let far = changeToFarenheit(cel).toFixed(0) + " F";
-    document.getElementById("top-far").innerHTML = far;
+    let celsius = parseInt(this.weatherData[updateDropDown].temperature);
+    let fahrenheit = changeToFahrenheit (celsius).toFixed(0) + " F";
+    document.getElementById("top-fahrenheit").innerHTML = fahrenheit;
     //Date and time
     let datetimeArr;
     datetimeArr = this.weatherData[updateDropDown].dateAndTime.split(",");
@@ -490,8 +489,8 @@ class WeatherTemplate {
     }
   }
 
-    /**
-   * @desc this functions is used to split the timeZone by /.
+  /**
+   * @desc this functions is used to split the timeZone by .
    */
   setCityTimeZones(city) {
     return city.timeZone.split("/")[0];
@@ -525,7 +524,6 @@ class WeatherTemplate {
     }
     document.querySelector(".bottom-grid").innerHTML = continentCard;
   }
-  
   /**
    * @desc this function Sort the Continent based on asscending or decending orders based on the user preference.
    */
